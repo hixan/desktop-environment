@@ -98,10 +98,10 @@ shadow-ignore-shaped = false;
 #
 #################################
 
-inactive-opacity = 0.8;
-active-opacity = 1;
-frame-opacity = 1;
-inactive-opacity-override = true;
+#inactive-opacity = 0.6;
+#active-opacity = 1;
+#frame-opacity = .2;
+#inactive-opacity-override = false;
 
 ## Dim inactive windows. (0.0 - 1.0)
 #inactive-dim = 0.1;
@@ -123,7 +123,7 @@ blur-background-fixed = true;
 
 blur-kern = "3x3box";
 blur-method = "kawase";
-blur-strength = 10;
+blur-strength = 8;
 
 #################################
 #
@@ -134,13 +134,13 @@ blur-strength = 10;
 # Fade windows during opacity changes.
 # fading = true;
 # The time between steps in a fade in milliseconds. (default 10).
-fade-delta = 20;
+#fade-delta = 20;
 # Opacity change between steps while fading in. (default 0.028).
-fade-in-step = 0.03;
+#fade-in-step = 0.03;
 # Opacity change between steps while fading out. (default 0.03).
-fade-out-step = 0.03;
+#fade-out-step = 0.03;
 # Fade windows in/out when opening/closing
-no-fading-openclose = true;
+#no-fading-openclose = true;
 
 # Specify a list of conditions of windows that should not be faded.
 fade-exclude = [ ];

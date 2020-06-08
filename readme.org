@@ -1,2 +1,3 @@
 * Useful tools
 - arandr - graphical monitor management
+- system-config-printer - manjaro GUI for cups (printers). RUN AS ROOT
