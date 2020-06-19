@@ -8,6 +8,10 @@
 #
 # Please see https://i3wm.org/docs/userguide.html for a complete reference!
 
+# this is the home folder of the desktop environment configuration
+# always clear: $mod+g
+set $desktop-environment-folder /home/alexe/.config/desktop-environment/
+
 set $mod Mod4
 
 # Font for window titles. Will also be used by the bar unless a different font
@@ -64,6 +68,12 @@ bindsym $mod+Shift+Return exec firefox
 
 # open file browser
 bindsym $mod+Shift+n exec --no-startup-id pcmanfm
+
+# open emacs frame
+bindsym $mod+b exec --no-startup-id "notify-send -t 5000 'starting emacs'; emacsclient --create-frame --alternate-editor ''"
+
+# open emacs frame to clipboard (floating)
+bindsym $mod+c exec --no-startup-id "notify-send -t 5000 'starting emacs clipboard'; $desktop-environment-folder/i3/launch_emacs_edit_clipboard.sh;"
 
 # kill focused window
 bindsym $mod+Shift+q kill
