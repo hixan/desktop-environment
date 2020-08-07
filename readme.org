@@ -1,3 +1,6 @@
 * Useful tools
 - arandr - graphical monitor management
+- autorandr - automatic profile assignment
 - system-config-printer - manjaro GUI for cups (printers). RUN AS ROOT
+* Default Applications
+  - PDF viewer: okular

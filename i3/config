@@ -300,4 +300,4 @@ bar {
 exec_always --no-startup-id $HOME/.config/desktop-environment/compton/launch.sh
 
 # monitor profile
-#exec_always --no-startup-id /home/alexe/.config/desktop-environment/screenlayout/dual-monitors.sh
+exec_always --no-startup-id autorandr -c

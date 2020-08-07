@@ -1,3 +1,2 @@
 setxkbmap -option ctrl:swapcaps -option altwin:swap_alt_win
-$HOME/.config/desktop-environment/screenlayout/dual-monitors.sh
 dwall bitday &
