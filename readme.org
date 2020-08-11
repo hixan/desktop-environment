@@ -4,3 +4,5 @@
 - system-config-printer - manjaro GUI for cups (printers). RUN AS ROOT
 * Default Applications
   - PDF viewer: okular
+  - terminal starts in ranger
+  - vim for .py files, emacs for org
