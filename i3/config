@@ -61,7 +61,7 @@ bindsym --release $mod+Ctrl+o	exec --no-startup-id compton-trans -s 100
 floating_modifier $mod
 
 # start a terminal
-bindsym $mod+Return exec i3-sensible-terminal
+bindsym $mod+Return exec --no-startup-id "$desktop-environment-folder/i3/launch_terminal.sh"
 
 # open copied link in VLC
 bindsym $mod+v exec vlc "$(xsel -bo)"
@@ -101,7 +101,7 @@ exec --no-startup-id xautolock -time 10 -locker blurlock
 #
   #client.background       #2B2C2B
 # class                 border  backgr. text    indicator child_border
-client.focused          #4c7899 #285577 #ffffff #2e9ef4   #285577
+client.focused          #4c7899 #285577 #ffffff #2e9ef4   #2885A7
 client.focused_inactive #333333 #5f676a #ffffff #484e50   #5f676a
 client.unfocused        #333333 #222222 #888888 #292d2e   #222222
 client.urgent           #2f343a #900000 #ffffff #900000   #900000
