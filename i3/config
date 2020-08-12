@@ -101,13 +101,43 @@ exec --no-startup-id xautolock -time 10 -locker blurlock
 #
   #client.background       #2B2C2B
 # class                 border  backgr. text    indicator child_border
-client.focused          #4c7899 #285577 #ffffff #2e9ef4   #2885A7
-client.focused_inactive #333333 #5f676a #ffffff #484e50   #5f676a
-client.unfocused        #333333 #222222 #888888 #292d2e   #222222
-client.urgent           #2f343a #900000 #ffffff #900000   #900000
-client.placeholder      #000000 #0c0c0c #ffffff #000000   #0c0c0c
+#client.focused          #4c7899 #285577 #ffffff #2e9ef4   #2885A7
+#client.focused_inactive #333333 #5f676a #ffffff #484e50   #5f676a
+#client.unfocused        #333333 #222222 #888888 #292d2e   #222222
+#client.urgent           #2f343a #900000 #ffffff #900000   #900000
+#client.placeholder      #000000 #0c0c0c #ffffff #000000   #0c0c0c
+#
+#client.background       #ffffff
+# Set colors from Xresources
+# Change 'color7' and 'color2' to whatever colors you want i3 to use 
+# from the generated scheme.
+# NOTE: The '#f0f0f0' in the lines below is the color i3 will use if
+# it fails to get colors from Xresources.
 
-client.background       #ffffff
+set_from_resource $col0 i3wm.color0 #f0f0f0
+set_from_resource $col1 i3wm.color1 #f0f0f0
+set_from_resource $col2 i3wm.color2 #f0f0f0
+set_from_resource $col3 i3wm.color3 #f0f0f0
+set_from_resource $col4 i3wm.color4 #f0f0f0
+set_from_resource $col5 i3wm.color5 #f0f0f0
+set_from_resource $col6 i3wm.color6 #f0f0f0
+set_from_resource $col7 i3wm.color7 #f0f0f0
+set_from_resource $col8 i3wm.color8 #f0f0f0
+
+set $noborder #ffffff00
+
+
+# class                 border    backgr.   text      indicator child_border
+client.focused          $col1     $col0     $col8     $col2     $col1
+client.focused_inactive $noborder $col0     $col8     $noborder $noborder
+client.unfocused        $noborder $col0     $col8     $noborder $noborder
+client.urgent           $noborder $col0     $col8     $noborder $noborder
+client.placeholder      $noborder $col0     $col8     $noborder $noborder
+
+client.background       $bg
+
+# PROTIP: You can also dynamically set dmenu's colors this way:
+#bindsym $mod+d exec dmenu_run -nb "$fg" -nf "$bg" -sb "$bg" -sf "$fg"
 
 # change focus
 bindsym $mod+h focus left
