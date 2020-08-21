@@ -1,0 +1,4 @@
+#!/bin/sh
+
+# keyboard layout
+setxkbmap 'us(dvorak)' -option ctrl:swapcaps -option altwin:swap_alt_win

@@ -1,0 +1,4 @@
+#!/bin/sh
+
+# monitor profiles
+autorandr -c

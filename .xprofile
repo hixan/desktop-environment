@@ -1,2 +1,0 @@
-setxkbmap -option ctrl:swapcaps -option altwin:swap_alt_win
-dwall bitday &

@@ -1,0 +1,5 @@
+#!/bin/sh
+
+# background and colorscheme
+wal -i ~/Pictures/backgrounds -e -a 50
+
