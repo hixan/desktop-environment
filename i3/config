@@ -1,21 +1,24 @@
 
 # always clear: $mod+g (for testing)
-
-set $desktop-environment-folder /home/alexe/.config/desktop-environment/
-
-# adjust monitor profiles
-exec_always --no-startup-id source $desktop-environment-folder/scripts/monitor_profiles
-
-# set keyboard layout with mappings
-exec_always --no-startup-id source $desktop-environment-folder/scripts/keyboard_layout
-
-# set colorscheme
-exec_always --no-startup-id source $desktop-environment-folder/scripts/colorscheme
-
 set $mod Mod4
 
-# disable titlebar
-for_window [class="^.*"] border pixel 2
+set $desktop-environment-folder ~/.config/desktop-environment/
+
+
+# adjust monitor profiles
+exec_always --no-startup-id exec $desktop-environment-folder/scripts/monitor_profiles
+
+# set keyboard layout with mappings
+exec_always --no-startup-id exec $desktop-environment-folder/scripts/keyboard_layout
+
+# set colorscheme
+exec_always --no-startup-id exec $desktop-environment-folder/scripts/colorscheme
+
+# set colorscheme
+exec_always --no-startup-id exec $desktop-environment-folder/scripts/focus_indicate
+
+# disable titlebars and borders
+for_window [class="^.*"] border pixel 0
 new_window 1pixel
 
 # xss-lock grabs a logind suspend inhibit lock and will use i3lock to lock the
@@ -282,5 +285,4 @@ bar {
 }
 
 # enable transparency
-#exec_always --no-startup-id $HOME/.config/desktop-environment/compton/launch.sh
 exec_always picom
