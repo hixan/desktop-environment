@@ -14,11 +14,10 @@ exec_always --no-startup-id exec $desktop-environment-folder/scripts/keyboard_la
 # set colorscheme
 exec_always --no-startup-id exec $desktop-environment-folder/scripts/colorscheme
 
-# set colorscheme
-exec_always --no-startup-id exec $desktop-environment-folder/scripts/focus_indicate
 
-# disable titlebars and borders
-for_window [class="^.*"] border pixel 0
+# set focus indicator and border width (have one of the two lines below commented)
+exec_always --no-startup-id exec $desktop-environment-folder/scripts/focus_indicate
+#for_window [class="^.*"] border pixel 0
 new_window 1pixel
 
 # xss-lock grabs a logind suspend inhibit lock and will use i3lock to lock the

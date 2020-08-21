@@ -1,5 +1,7 @@
 #!/bin/sh
 
 # background and colorscheme
-wal -i ~/Pictures/backgrounds -e -a 50
+wal -i ~/Pictures/backgrounds -a 50 --saturate 1
+# again for the bar (not sure why this is needed)
+wal -Rq
 
