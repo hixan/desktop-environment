@@ -20,10 +20,6 @@ exec_always --no-startup-id exec $desktop-environment-folder/scripts/focus_indic
 #for_window [class="^.*"] border pixel 0
 new_window 1pixel
 
-# xss-lock grabs a logind suspend inhibit lock and will use i3lock to lock the
-# screen before suspend. Use loginctl lock-session to lock your screen.
-#exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
-
 exec --no-startup-id nm-applet
 # network-manager applet (daemon should be started by systemd)
 
