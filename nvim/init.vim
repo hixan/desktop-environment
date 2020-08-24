@@ -23,7 +23,13 @@ Plug 'dylanaraps/wal.vim'
 
 " easy alignment of comments, code, etc
 Plug 'junegunn/vim-easy-align'
+
+" jupyter notebook integration
+Plug 'goerz/jupytext.vim'
 call plug#end()
+
+" jupytext to open as .py format
+let g:jupytext_fmt = 'py'
 
 " enable pywal colorscheme
 colorscheme wal
@@ -40,10 +46,6 @@ set nu
 
 " centered cursor
 set scrolloff=9999
-
-
-
-
 
 " Start interactive EasyAlign in visual mode (e.g. vipga)
 xmap ga <Plug>(EasyAlign)

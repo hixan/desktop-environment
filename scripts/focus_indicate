@@ -33,12 +33,16 @@ def focus_change_trigger(func):
 
             # halts until there is output of the subprocess (a change of focus)
             # active window id
-            window_id = window_changer.stdout.readline().decode('utf-8').split(' ')[-1]
+            window_id = window_changer.stdout.readline().decode('utf-8').split(' ')[-1].strip()
             func(window_id)
 
 
 def indicate_focus(window_id):
     Popen(['i3-msg', '[class="^.*"] border pixel 0; border pixel 2'])
+    #y = Popen(['xprop', '-id', window_id],stdout=PIPE).stdout.readlines()
+    #y = '\n'.join(map(lambda x: x.decode('utf-8').strip(), y))
+    #with open('/dev/pts/0', 'w') as f:
+        #print(y, file=f)
 
 
 focus_change_trigger(indicate_focus)
