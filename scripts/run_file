@@ -1,0 +1,74 @@
+#!/usr/bin/env python3
+import sys
+import click
+from subprocess import Popen, PIPE
+from pathlib import Path
+from python_tools import get_active_pid, get_tty, is_python_file, METADIR
+from typing import List
+import json
+
+metafile = METADIR / 'run_file_meta.json'
+metafile.parent.mkdir(parents=True, exist_ok=True)
+
+@click.command()
+@click.option('--file', '-f', is_flag=False, help='File to run. Ignored if used with -s or --set-tty')
+@click.option('--set-tty', '-s', is_flag=True, help='Set the output TTY to the TTY connected to the active terminal. Does nothing if there is no TTY connected. If this flag is set, --file is ignored.')
+def main(file: str = None, set_tty: bool = False):
+    '''this script executes FILE and sends output to a specified TTY.'''
+    assert file or set_tty, 'Missing action! see --help'
+
+    if set_tty:
+        save_tty()
+        return
+    if file:
+        file = Path(file)
+        assert file.exists(), f'{file.absolute()} does not exist.'
+        if is_python_file(file):
+            run_python_file(file)
+        else:
+            run_non_python_file(file)
+
+
+def save_tty():
+    # get_tty returns false if it could not find a tty connected.
+    if tty := get_tty(get_active_pid()):
+        json.dump({'tty': tty}, metafile.open('w'))
+        print('success')
+    else:
+        raise RuntimeError('no tty could be found')
+
+
+def load_tty():
+    return json.load(metafile.open('r'))['tty']
+
+
+def run_python_file(file: Path):
+    # to enable colored output
+    enable_cols = '''
+try:
+    from IPython.core.ultratb import ColorTB
+except ImportError:
+    pass
+else:
+    import sys
+    sys.excepthook = ColorTB()
+'''
+    run_cmd_external(['python', '-c', enable_cols + file.open('r').read()], load_tty())
+
+
+def run_non_python_file(file: Path):
+    raise NotImplementedError
+
+def run_cmd_external(cmd: List[str], tty: str):
+    # clear console
+    with (ttyf := Path('/dev') / tty).open('w') as f:
+        f.write('\033[2J\033[2H')
+    # run command
+    with ttyf.open('w') as f:
+        # write command output
+        Popen(cmd, stdout=f).communicate()
+        f.write('finished executing.')
+
+
+if __name__ == '__main__':
+    main()

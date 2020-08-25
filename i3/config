@@ -47,6 +47,9 @@ bindsym $mod+Return exec --no-startup-id "$desktop-environment-folder/scripts/te
 # start a terminal with the same cwd as the current focused program
 bindsym $mod+Control+Return exec --no-startup-id "$desktop-environment-folder/scripts/terminal_cwd"
 
+# set output tty with run_file
+bindsym $mod+o exec --no-startup-id "$desktop-environment-folder/scripts/run_file -s"
+
 # open copied link in VLC
 bindsym $mod+v exec vlc "$(xsel -bo)"
 
