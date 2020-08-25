@@ -7,12 +7,18 @@
   - [X] floating window remember transparency
   - [ ] block content floating window - custom program?
 * Misc
-  - [-] fix audio - not playing through:
-    - [ ] built in speakers
+  - [X] fix audio - not playing through:
+    - [X] built in speakers
     - [X] bluetooth
   - [X] automatic multi-monitor profiles
+  - [ ] pick audio playback device on the fly
+  - [ ] fix alsa/pulseaudio - both are running and one needs to be removed and the other made default.
   - [X] lock workspace to monitor?
     - made workspaces movable instead
 * Editor
   - [ ] determine how default applications work, MIME typess etc
-  - [ ] add shortcut to ranger to open emacs magit there
+  - [-] Python module to do the following:
+    - [X] run command (buffered or cached) and send output to specified tty (also buffered/cached)
+      - Doesnt run a cached command, but can be modified to.
+    - [ ] generate/find documentation and show in specified tty or web browser
+    - [ ] vim bindings for python to automatically open that documentation
