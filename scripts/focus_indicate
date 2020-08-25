@@ -6,14 +6,13 @@ import os
 
 # pidfile and other directories
 dir = Path(os.getenv('HOME'))/'.config'/'desktop-environment'
-pidfile = dir / 'pids' / 'indicate_focus'
+pidfile = dir / 'meta' / 'indicate_focus_pid'
 pidfile.parent.mkdir(parents=True, exist_ok=True)
 
 pid_actual = str(os.getpid())
 
 with pidfile.open('w') as f:
     print(pid_actual, file=f, end='')
-
 
 def check_pid():
     # kills this if there is another instance running
