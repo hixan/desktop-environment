@@ -1,14 +1,14 @@
 #!/usr/bin/env python3
-import sys
 import click
 from subprocess import Popen, PIPE
 from pathlib import Path
 from python_tools import get_active_pid, get_tty, is_python_file, METADIR
-from typing import List
 import json
+
 
 metafile = METADIR / 'run_file_meta.json'
 metafile.parent.mkdir(parents=True, exist_ok=True)
+
 
 @click.command()
 @click.option('--file', '-f', is_flag=False, help='File to run. Ignored if used with -s or --set-tty')
@@ -39,35 +39,37 @@ def save_tty():
 
 
 def load_tty():
-    return json.load(metafile.open('r'))['tty']
+    return Path('/dev') / json.load(metafile.open('r'))['tty']
 
 
 def run_python_file(file: Path):
     # to enable colored output
-    enable_cols = '''
-try:
-    from IPython.core.ultratb import ColorTB
-except ImportError:
-    pass
-else:
-    import sys
-    sys.excepthook = ColorTB()
-'''
-    run_cmd_external(['python', '-c', enable_cols + file.open('r').read()], load_tty())
+    #    enable_cols = '''
+    # try:
+    #     from IPython.core.ultratb import ColorTB
+    # except ImportError:
+    #     pass
+    # else:
+    #     import sys
+    #     sys.excepthook = ColorTB()
+    # '''
+    load_tty()
+    clear_terminal(tty := load_tty())
+    # print output to tty
+    with open(tty, 'w') as f:
+        # color output
+        colorer = Popen(['pygmentize', '-l', 'pytb'], stdout=f, stdin=PIPE)
+        Popen(['python', file], stderr=colorer.stdin, stdout=f)
 
 
 def run_non_python_file(file: Path):
     raise NotImplementedError
 
-def run_cmd_external(cmd: List[str], tty: str):
+
+def clear_terminal(tty: str):
     # clear console
-    with (ttyf := Path('/dev') / tty).open('w') as f:
+    with tty.open('w') as f:
         f.write('\033[2J\033[2H')
-    # run command
-    with ttyf.open('w') as f:
-        # write command output
-        Popen(cmd, stdout=f).communicate()
-        f.write('finished executing.')
 
 
 if __name__ == '__main__':
