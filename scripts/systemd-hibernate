@@ -1,0 +1,17 @@
+#!/bin/bash
+# This file is meant to work with systemd-hibernate.service. Symlink it to /usr/lib/systemd/system-sleep/<any name>.
+
+SCRIPTS_DIR=$HOME/.config/desktop-environment/scripts
+reload=(
+	colorscheme
+	keyboard_layout
+	focus_indicate
+	monitor_profiles
+	)
+
+if [ "$1" == "post" ]; then
+	for r in $reload; do
+		. $SCRIPTS_DIR/$r
+	done
+fi
+
