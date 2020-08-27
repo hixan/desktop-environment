@@ -26,16 +26,23 @@ Plug 'junegunn/vim-easy-align'
 
 " jupyter notebook integration
 Plug 'goerz/jupytext.vim'
+
+" style guides and syntax errors
+Plug 'nvie/vim-flake8'
 call plug#end()
 
 " jupytext to open as .py format
 let g:jupytext_fmt = 'py'
+let g:jupytext_to_ipynb_opts = '--to=ipynb --update'
 
 " enable pywal colorscheme
 colorscheme wal
 
 " enable deoplete
 let g:deoplete#enable_at_startup = 1
+
+" wrap on whitespace
+set nolist wrap linebreak breakat&vim
 
 " better leader
 let mapleader=","

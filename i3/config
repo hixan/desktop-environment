@@ -89,7 +89,7 @@ set $noborder #ffffff00
 
 
 # class                 border    backgr.   text      indicator child_border
-client.focused          $col1     $col0     $col8     $col2     $col1
+client.focused          $noborder $col3     $col0     $col2     $col1
 client.focused_inactive $noborder $col0     $col8     $noborder $noborder
 client.unfocused        $noborder $col0     $col8     $noborder $noborder
 client.urgent           $noborder $col0     $col8     $noborder $noborder
@@ -147,13 +147,13 @@ bindsym $mod+a focus parent
 set $ws1 "(1) Home"
 set $ws2 "(2) Code"
 set $ws3 "(3) Web"
-set $ws4 "4"
-set $ws5 "5"
-set $ws6 "6"
-set $ws7 "7"
-set $ws8 "8"
+set $ws4 "(4)"
+set $ws5 "(5)"
+set $ws6 "(6)"
+set $ws7 "(7)"
+set $ws8 "(8)"
 set $ws9 "(9) Media"
-set $ws10 "10"
+set $ws10 "(10)"
 
 # Specify the distance between windows in pixels. (i3-gaps)
 gaps inner 25
