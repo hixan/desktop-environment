@@ -2,36 +2,22 @@
 
 from subprocess import Popen, PIPE
 from pathlib import Path
+from python_tools import PidUniqueChecker
 import os
 
 # pidfile and other directories
 dir = Path(os.getenv('HOME'))/'.config'/'desktop-environment'
-pidfile = dir / 'meta' / 'indicate_focus_pid'
-pidfile.parent.mkdir(parents=True, exist_ok=True)
-
-pid_actual = str(os.getpid())
-
-with pidfile.open('w') as f:
-    print(pid_actual, file=f, end='')
-
-def check_pid():
-    # kills this if there is another instance running
-    with pidfile.open('r') as f:
-        pid_expected = f.readlines()[0]
-    if pid_expected == pid_actual:
-        return True
+pidchecker = PidUniqueChecker('focus_indicate', keep_old=False)
+pidchecker.start_program()
 
 
 def focus_change_trigger(func):
     with Popen(['xprop', '-spy', '-root', '_NET_ACTIVE_WINDOW'], stdout=PIPE) as window_changer:
         while True:
-            
-            # make sure this is the latest running instance of this program
-            if not check_pid():
-                assert 0, 'Process is already running'
+            pidchecker.ensure_unique()
 
-            # halts until there is output of the subprocess (a change of focus)
             # active window id
+            # halts until there is output of the subprocess (a change of focus)
             window_id = window_changer.stdout.readline().decode('utf-8').split(' ')[-1].strip()
             func(window_id)
 

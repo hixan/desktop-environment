@@ -38,6 +38,33 @@ def is_python_file(file: Path):
     if (hb := file.open('r').readline())[0:2] == '#!':
         return 'python' in hb
 
+
+class PidUniqueChecker:
+
+    def __init__(self, name: str, metadir: Path=METADIR, keep_old=True):
+        self.pidfile : Path = metadir / name
+        self.pid = int(os.getpid())
+        self.keep_old = bool(keep_old)
+
+    def ensure_unique(self, error=True):
+        # if the file does not exist assume this process is not running.
+        if not self.pidfile.exists():
+            return True
+        # read saved pid (if exists)
+        with self.pidfile.open('r') as f:
+            observed = int(f.read())
+            if observed != self.pid:
+                assert not error, f'Program {self.pidfile.name} already running!'
+                return False
+
+    def start_program(self, error=True):
+        if self.keep_old:
+            self.ensure_unique(error=error)
+        self.pidfile.parent.mkdir(parents=True, exist_ok=True)
+        with self.pidfile.open('w') as f:
+            f.write(str(self.pid))
+
+
 if __name__ == '__main__':
     print(get_active_pid())
     print(get_active_wd())
