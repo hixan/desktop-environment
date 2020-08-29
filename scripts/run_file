@@ -26,7 +26,7 @@ def main(file: str = None, set_tty: bool = False):
         if is_python_file(file):
             run_python_file(file)
         else:
-            run_non_python_file(file)
+            raise NotImplementedError
 
 
 def save_tty():
@@ -58,12 +58,15 @@ def run_python_file(file: Path):
     # print output to tty
     with open(tty, 'w') as f:
         # color output
+        normal_c = '\u001b[37m'
+        highlight_c = '\u001b[33m'
         colorer = Popen(['pygmentize', '-l', 'pytb'], stdout=f, stdin=PIPE)
-        Popen(['python', file], stderr=colorer.stdin, stdout=f)
-
-
-def run_non_python_file(file: Path):
-    raise NotImplementedError
+        process = Popen(['python', file], stderr=colorer.stdin, stdout=f)
+        print(f'{highlight_c}started process with PID {process.pid}{normal_c}', file=f)
+        process.communicate()
+        colorer.communicate()
+        print(f'{highlight_c}Process with PID {process.pid} finished.{normal_c}', file=f)
+        print('\n'*5, file=f)
 
 
 def clear_terminal(tty: str):
