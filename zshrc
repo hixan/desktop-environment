@@ -108,6 +108,11 @@ function open {
 	xdg-open $1 > /dev/null 2>&1 &
 	disown
 }
+function emg {
+	[ -f $1 ] || touch $1
+	emacsclient -c --alternate-editor '' $1 &
+	disown
+}
 
 alias which="which -a"
 alias em="emacsclient -t --alternate-editor ''"

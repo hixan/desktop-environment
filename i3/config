@@ -14,14 +14,15 @@ exec_always --no-startup-id exec $desktop-environment-folder/scripts/keyboard_la
 # set colorscheme
 exec_always --no-startup-id exec $desktop-environment-folder/scripts/colorscheme
 
+# restart picom
+exec_always --no-startup-id exec $desktop-environment-folder/scripts/restart_picom
 
 # set focus indicator and border width (have one of the two lines below commented)
 exec_always --no-startup-id exec $desktop-environment-folder/scripts/focus_indicate
+
 #for_window [class="^.*"] border pixel 0
 new_window 1pixel
 
-exec --no-startup-id nm-applet
-# network-manager applet (daemon should be started by systemd)
 
 # Use pactl to adjust volume in PulseAudio.
 set $refresh_i3status killall -SIGUSR1 i3status
@@ -196,11 +197,13 @@ bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcu
 # start program launcher
 bindsym $mod+space exec --no-startup-id dmenu_recency
 
+bindsym $mod+Shift+v exec --no-startup-id pavucontrol
+
 ################################################################################################
 ## sound-section - DO NOT EDIT if you wish to automatically upgrade Alsa -> Pulseaudio later! ##
 ################################################################################################
 
-exec --no-startup-id volumeicon  # volume
+# network-manager applet (daemon should be started by systemd)
 exec --no-startup-id nm-applet  # network (wifi)
 exec --no-startup-id blueman-applet  # bluetooth
 exec --no-startup-id xfce4-power-manager  # power + hibernate
@@ -261,7 +264,7 @@ bindsym $mod+r mode "resize"
 bar {
 	i3bar_command i3bar
 	status_command i3status
-	position bottom
+	position top
 
 ## please set your primary output first. Example: 'xrandr --output eDP1 --primary'
 #	tray_output primary
@@ -285,6 +288,3 @@ bar {
         urgent_workspace   $col0 $col0 #E5201D
     }
 }
-
-# enable transparency
-exec_always picom
