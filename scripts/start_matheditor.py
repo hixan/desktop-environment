@@ -16,8 +16,15 @@ def clear_tempfile():
     shutil.copy(math_startfile, mathfile)
 
 def editor():
+    nvim_cmds = [
+            f'-n "{mathfile}"',
+             '-c "silent JupyterConnect"',
+             '-c JupyterRunFile',
+            f'-c "nnoremap <buffer> <silent> <localleader>T :e {math_startfile}<CR>"',
+            ]
+    nvim_cmd = 'nvim ' + ' '.join(nvim_cmds)
     rv = Popen([
-        'urxvt', '-name', 'math', '-e', 'zsh', '-i', '-c', f'nvim -n {mathfile} -c "silent JupyterConnect" -c JupyterRunFile'])
+        'urxvt', '-name', 'math', '-e', 'zsh', '-i', '-c', nvim_cmd])
     time.sleep(1)
     float_window(rv)
     time.sleep(.1)
@@ -40,8 +47,6 @@ def console():
     scratch_window(rv)
 
     return rv
-
-print(os.getpid())
 
 if __name__ == '__main__':
 
