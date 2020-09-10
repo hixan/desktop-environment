@@ -1,19 +1,19 @@
 #!/usr/bin/env python3
 
-from python_tools import scratch_window, move_window, float_window, PidUniqueChecker
+from python_tools import scratch_window, move_window, float_window, PidUniqueChecker, DIR
 from subprocess import Popen
+import shutil
 import time
 import os
 
 mathfile = '/tmp/desktop_environment_mathfile.py'
+math_startfile = DIR / 'config' / 'math_startfile.py'
 posx, posy = 0,300
 wx, wy = 1000, 1000
 vertsplit = True
 
 def clear_tempfile():
-    with open(mathfile, 'w') as f:
-        print('''import sympy as sm
-x, y, z = sm.symbols('x y z')''', file=f)
+    shutil.copy(math_startfile, mathfile)
 
 def editor():
     rv = Popen([
