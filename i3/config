@@ -119,6 +119,10 @@ bindsym $mod+Ctrl+l move workspace to output right
 bindsym $mod+minus move scratchpad
 bindsym $mod+plus scratchpad show
 
+# math console (using sympy and qtconsole with jupyter-vim)
+bindsym $mod+Shift+m exec --no-startup-id $desktop-environment-folder/scripts/start_matheditor.py
+bindsym $mod+m [class="jupyter-qtconsole"] scratchpad show; [instance="math"] scratchpad show
+
 # toggle split orientation
 bindsym $mod+s split toggle
 
