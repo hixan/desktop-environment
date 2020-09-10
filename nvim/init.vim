@@ -8,10 +8,11 @@ Plug 'numirias/semshi', {'do': ':UpdateRemotePlugins'}
 " python autocompletion
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'zchee/deoplete-jedi'
+Plug 'davidhalter/jedi-vim'
 "
 " python folding
 Plug 'tmhedberg/SimpylFold'
-"
+
 " python docstrings
 Plug 'heavenshell/vim-pydocstring', { 'do': 'make install' }
 
@@ -38,9 +39,6 @@ call plug#end()
 
 " enable pywal colorscheme
 colorscheme wal
-
-" enable deoplete
-let g:deoplete#enable_at_startup = 1
 
 " wrap on whitespace
 set nolist wrap linebreak breakat&vim
@@ -81,6 +79,14 @@ nnoremap <buffer> <silent> <localleader>C :JupyterSendCell<CR>
 nnoremap <buffer> <silent> <localleader>. :JupyterSendRange<CR>
 nmap     <buffer> <silent> <localleader>c <Plug>JupyterRunTextObj
 vmap     <buffer> <silent> <localleader>c <Plug>JupyterRunVisual
+
+"#################### Python Files ############################
+" enable deoplete (completion help)
+let g:deoplete#enable_at_startup = 1
+
+" enable jedi keybindings (things like code jumping etc)
+let g:jedi#auto_initialization = 1
+let g:jedi#auto_vim_configuration = 1
 
 
 
