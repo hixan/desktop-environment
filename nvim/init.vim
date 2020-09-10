@@ -42,24 +42,28 @@ call plug#end()
 " enable pywal colorscheme
 colorscheme wal
 
-" wrap on whitespace
-set nolist wrap linebreak breakat&vim
-
-" better leader
-let mapleader=","
-
 " line numbers
 set rnu
 set nu
 
+" better leader
+let mapleader="\<Space>"
+let maplocalleader=","
+
 " centered cursor
 set scrolloff=9999
 
+" wrap on whitespace
+"set nolist wrap linebreak breakat&vim
+
+"#################### ALL ######################################
 " Start interactive EasyAlign in visual mode (e.g. vipga)
 xmap ga <Plug>(EasyAlign)
 
 " Start interactive EasyAlign for a motion/text object (e.g. gaip)
 nmap ga <Plug>(EasyAlign)
+
+nmap <leader>o :only<CR>
 
 "################### Jupyter Notebook ##########################
 " jupytext to open as .py format
@@ -81,6 +85,14 @@ nnoremap <buffer> <silent> <localleader>C :JupyterSendCell<CR>
 nnoremap <buffer> <silent> <localleader>. :JupyterSendRange<CR>
 nmap     <buffer> <silent> <localleader>c <Plug>JupyterRunTextObj
 vmap     <buffer> <silent> <localleader>c <Plug>JupyterRunVisual
+
+" clear the output terminal screen
+nnoremap <buffer> <silent> <localleader>l :norm oprint('\033[2J]')<ESC>:JupyterSendRange<CR>dd
+
+nnoremap <buffer> <silent> <localleader>U :JupyterUpdateShell<CR>
+
+" Debugging maps
+nnoremap <buffer> <silent> <localleader>b :PythonSetBreak<CR>
 
 "###################### R files ################################
 " fix R indentation
