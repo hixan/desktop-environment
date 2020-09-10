@@ -14,7 +14,11 @@ Plug 'tmhedberg/SimpylFold'
 "
 " python docstrings
 Plug 'heavenshell/vim-pydocstring', { 'do': 'make install' }
-"
+
+" jupyter console integration
+Plug 'jupyter-vim/jupyter-vim'
+
+
 " surround text objects with quotes, brackets, etc
 Plug 'tpope/vim-surround'
 
@@ -31,9 +35,6 @@ Plug 'goerz/jupytext.vim'
 Plug 'nvie/vim-flake8'
 call plug#end()
 
-" jupytext to open as .py format
-let g:jupytext_fmt = 'py'
-let g:jupytext_to_ipynb_opts = '--to=ipynb --update'
 
 " enable pywal colorscheme
 colorscheme wal
@@ -59,5 +60,27 @@ xmap ga <Plug>(EasyAlign)
 
 " Start interactive EasyAlign for a motion/text object (e.g. gaip)
 nmap ga <Plug>(EasyAlign)
+
+"################### Jupyter Notebook ##########################
+" jupytext to open as .py format
+let g:jupytext_fmt = 'py'
+let g:jupytext_to_ipynb_opts = '--to=ipynb --update'
+
+" overwrite default configs
+let g:jupyter_mapkeys = 0
+
+" Run current file
+nnoremap <buffer> <silent> <localleader>R :JupyterRunFile<CR>
+nnoremap <buffer> <silent> <localleader>I :PythonImportThisFile<CR>
+
+" Change to directory of current file
+nnoremap <buffer> <silent> <localleader>d :JupyterCd %:p:h<CR>
+
+" Send a selection of lines
+nnoremap <buffer> <silent> <localleader>C :JupyterSendCell<CR>
+nnoremap <buffer> <silent> <localleader>. :JupyterSendRange<CR>
+nmap     <buffer> <silent> <localleader>c <Plug>JupyterRunTextObj
+vmap     <buffer> <silent> <localleader>c <Plug>JupyterRunVisual
+
 
 
