@@ -34,8 +34,10 @@ Plug 'goerz/jupytext.vim'
 
 " style guides and syntax errors
 Plug 'nvie/vim-flake8'
-call plug#end()
 
+" R-lang in vim!
+"Plug 'jalvesaq/Nvim-R', {'branch': 'stable'}
+call plug#end()
 
 " enable pywal colorscheme
 colorscheme wal
@@ -79,6 +81,12 @@ nnoremap <buffer> <silent> <localleader>C :JupyterSendCell<CR>
 nnoremap <buffer> <silent> <localleader>. :JupyterSendRange<CR>
 nmap     <buffer> <silent> <localleader>c <Plug>JupyterRunTextObj
 vmap     <buffer> <silent> <localleader>c <Plug>JupyterRunVisual
+
+"###################### R files ################################
+" fix R indentation
+let r_indent_align_args = 0
+" R-lang set tab width
+autocmd filetype r setlocal tabstop=2 shiftwidth=2
 
 "#################### Python Files ############################
 " enable deoplete (completion help)
