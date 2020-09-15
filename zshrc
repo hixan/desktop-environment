@@ -113,6 +113,16 @@ function emg {
 	emacsclient -c --alternate-editor '' $1 &
 	disown
 }
+function jnvim {
+	[ -f $1 ] || touch $1
+	jupyter-qtconsole --style=stata-dark --no-confirm-exit > /dev/null 2>&1 &
+	pid=$!
+	sleep 1
+	nvim $1 -c "silent JupyterConnect"
+	kill $pid
+}
+
+alias uni_todo="python /home/alexe/uni/organisation/scripts/todolist.py"
 
 alias which="which -a"
 alias em="emacsclient -t --alternate-editor ''"
