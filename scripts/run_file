@@ -13,13 +13,16 @@ metafile.parent.mkdir(parents=True, exist_ok=True)
 @click.command()
 @click.option('--file', '-f', is_flag=False, help='File to run. Ignored if used with -s or --set-tty')
 @click.option('--set-tty', '-s', is_flag=True, help='Set the output TTY to the TTY connected to the active terminal. Does nothing if there is no TTY connected. If this flag is set, --file is ignored.')
-def main(file: str = None, set_tty: bool = False):
+@click.option('--pytest', '-t', is_flag=True, help='run a testing suite with pytest')
+def main(file: str = None, set_tty: bool = False, pytest: bool = False):
     '''this script executes FILE and sends output to a specified TTY.'''
-    assert file or set_tty, 'Missing action! see --help'
+    assert file or set_tty or pytest, 'Missing action! see --help'
 
     if set_tty:
         save_tty()
         return
+    if pytest:
+        run_python_test()
     if file:
         file = Path(file)
         assert file.exists(), f'{file.absolute()} does not exist.'
@@ -43,16 +46,6 @@ def load_tty():
 
 
 def run_python_file(file: Path):
-    # to enable colored output
-    #    enable_cols = '''
-    # try:
-    #     from IPython.core.ultratb import ColorTB
-    # except ImportError:
-    #     pass
-    # else:
-    #     import sys
-    #     sys.excepthook = ColorTB()
-    # '''
     load_tty()
     clear_terminal(tty := load_tty())
     # print output to tty
@@ -60,14 +53,27 @@ def run_python_file(file: Path):
         # color output
         normal_c = '\u001b[37m'
         highlight_c = '\u001b[33m'
+
         colorer = Popen(['pygmentize', '-l', 'pytb'], stdout=f, stdin=PIPE)
         process = Popen(['python', file], stderr=colorer.stdin, stdout=f)
+        print('\n'*3, file=f)
         print(f'{highlight_c}started process with PID {process.pid}{normal_c}', file=f)
         process.communicate()
         colorer.communicate()
         print(f'{highlight_c}Process with PID {process.pid} finished.{normal_c}', file=f)
         print('\n'*5, file=f)
 
+def run_python_test():
+    load_tty()
+    clear_terminal(tty := load_tty())
+    with open(tty, 'w') as f:
+        normal_c = '\u001b[37m'
+        highlight_c = '\u001b[33m'
+
+        print('\n'*3, file=f)
+        #print(f'{highlight_c}started process with PID {process.pid}{normal_c}', file=f)
+        process = Popen(['pytest', '--color=yes'], stderr=f, stdout=f).communicate()
+        print('\n'*3, file=f)
 
 def clear_terminal(tty: str):
     # clear console

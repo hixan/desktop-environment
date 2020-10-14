@@ -115,14 +115,19 @@ function emg {
 }
 function jnvim {
 	[ -f $1 ] || touch $1
-	jupyter-qtconsole --style=stata-dark --no-confirm-exit > /dev/null 2>&1 &
+	jupyter-qtconsole --no-confirm-exit > /dev/null 2>&1 &
 	pid=$!
 	sleep 1
 	nvim $1 -c "silent JupyterConnect"
 	kill $pid
 }
+function cd-uni-todo {
+	cd $(uni-todo -nl $1)
+}
 
-alias uni_todo="python /home/alexe/uni/organisation/scripts/todolist.py"
+alias uni-todo="python /home/alexe/uni/organisation/scripts/todolist.py"
+alias remove_color='sed -r "s/[[:cntrl:]]\[[0-9]{1,3}m//g"'
+alias silence=">/dev/null 2>&1"
 
 alias which="which -a"
 alias em="emacsclient -t --alternate-editor ''"
