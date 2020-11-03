@@ -1,5 +1,6 @@
 " Non spacevim setup
 set clipboard=unnamedplus
+set mouse=a
 call plug#begin('~/.config/nvim/plugged')
 "
 " python syntax highlighting
@@ -12,6 +13,8 @@ Plug 'davidhalter/jedi-vim'
 " Git diffs in margin
 Plug 'airblade/vim-gitgutter'
 
+" javascript
+Plug 'pangloss/vim-javascript'
 "
 " python folding
 Plug 'tmhedberg/SimpylFold'
