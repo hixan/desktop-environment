@@ -9,6 +9,9 @@ Plug 'numirias/semshi', {'do': ':UpdateRemotePlugins'}
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'zchee/deoplete-jedi'
 Plug 'davidhalter/jedi-vim'
+" Git diffs in margin
+Plug 'airblade/vim-gitgutter'
+
 "
 " python folding
 Plug 'tmhedberg/SimpylFold'
@@ -64,6 +67,9 @@ xmap ga <Plug>(EasyAlign)
 nmap ga <Plug>(EasyAlign)
 
 nmap <leader>o :only<CR>
+
+" git diffs in modeline
+set updatetime=100
 
 "################### Jupyter Notebook ##########################
 " jupytext to open as .py format
