@@ -57,7 +57,7 @@ let maplocalleader=","
 set scrolloff=9999
 
 " wrap on whitespace
-"set nolist wrap linebreak breakat&vim
+set nolist wrap linebreak breakat&vim
 
 "#################### ALL ######################################
 " Start interactive EasyAlign in visual mode (e.g. vipga)
