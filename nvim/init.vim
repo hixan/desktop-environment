@@ -22,6 +22,8 @@ Plug 'heavenshell/vim-pydocstring', { 'do': 'make install' }
 " jupyter console integration
 Plug 'jupyter-vim/jupyter-vim'
 
+" jupyter notebook integration
+Plug 'goerz/jupytext.vim'
 
 " surround text objects with quotes, brackets, etc
 Plug 'tpope/vim-surround'
@@ -31,9 +33,6 @@ Plug 'dylanaraps/wal.vim'
 
 " easy alignment of comments, code, etc
 Plug 'junegunn/vim-easy-align'
-
-" jupyter notebook integration
-Plug 'goerz/jupytext.vim'
 
 " style guides and syntax errors
 Plug 'nvie/vim-flake8'
