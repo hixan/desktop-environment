@@ -37,6 +37,13 @@ def move_window(window_process, pos=None, w=None, h=None):
 def i3msg(cmd):
     Popen(['i3-msg', cmd])
 
+def get_battery_info():
+    level = Popen(['acpi', '-b'], stdout=PIPE).stdout.read().decode('utf8')
+    _, s_num, s_state, s_charge, s_time, *__ = level.split()
+    num = int(s_num[:-1])
+    discharging = s_state == 'Discharging,'
+    charge = int(s_charge[:-2])
+    return discharging, charge
 
 def print_output(pcs: Popen):
     print(pcs.stdout.read())
