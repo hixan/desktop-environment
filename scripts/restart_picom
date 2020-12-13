@@ -1,0 +1,4 @@
+#!/bin/bash
+
+# picom auto-reloads when a change is detected to its file.
+echo -n '' >> ~/.config/picom/picom.conf
