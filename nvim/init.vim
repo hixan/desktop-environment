@@ -1,4 +1,3 @@
-" Non spacevim setup
 set clipboard=unnamedplus
 set mouse=a
 call plug#begin('~/.config/nvim/plugged')
@@ -7,9 +6,8 @@ call plug#begin('~/.config/nvim/plugged')
 Plug 'numirias/semshi', {'do': ':UpdateRemotePlugins'}
 "
 " python autocompletion
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-Plug 'zchee/deoplete-jedi'
-Plug 'davidhalter/jedi-vim'
+Plug 'neoclide/coc.nvim'
+
 " Git diffs in margin
 Plug 'airblade/vim-gitgutter'
 
@@ -22,7 +20,7 @@ Plug 'tmhedberg/SimpylFold'
 " python docstrings
 Plug 'heavenshell/vim-pydocstring', { 'do': 'make install' }
 
-" jupyter console integration
+" jupyter qtconsole integration
 Plug 'jupyter-vim/jupyter-vim'
 
 " jupyter notebook integration
@@ -73,6 +71,9 @@ nmap <leader>o :only<CR>
 " git diffs in modeline
 set updatetime=100
 
+" change folded color (to be different from comments)
+hi Folded ctermfg=6
+
 "################### Jupyter Notebook ##########################
 " jupytext to open as .py format
 let g:jupytext_fmt = 'py'
@@ -116,5 +117,16 @@ let g:deoplete#enable_at_startup = 1
 let g:jedi#auto_initialization = 1
 let g:jedi#auto_vim_configuration = 1
 
+"###################### Javascript #############################
+" javascript folding
+augroup javascript_folding
+    au!
+    au FileType javascript setlocal foldmethod=syntax
+augroup END
 
+" conceal for javascript
+let g:javascript_conceal_function             = "ƒ"
+let g:javascript_conceal_null                 = "ø"
+"let g:javascript_conceal_underscore_arrow_function = "🞅"
 
+set conceallevel=1
