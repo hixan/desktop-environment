@@ -1,9 +1,42 @@
 
-# always clear: $mod+g (for testing)
-set $mod Mod4
+# always clear: $super+g (for testing)
+set $super Mod4
+set $alt Mod1
 
+# set font
+font pango: Noto Sans 10
+
+# location for scripts
 set $desktop-environment-folder ~/.config/desktop-environment/
 
+##########################
+# Keybindings (Function) #
+########################## {{{
+
+#change volume
+bindsym XF86AudioRaiseVolume exec pulseaudio-ctl up
+bindsym XF86AudioLowerVolume exec pulseaudio-ctl down
+bindsym XF86AudioMute exec pulseaudio-ctl mute
+
+# music control
+bindsym XF86AudioNext exec playerctl next
+bindsym XF86AudioPrev exec playerctl prev
+bindsym XF86AudioPlay exec playerctl toggle
+bindsym XF86AudioStop exec playerctl stop
+
+# screenshot
+bindsym Print exec flameshot gui
+
+########################## }}}
+# Autostart              #
+########################## {{{
+
+# TODO disable lightdm all-together? automatically lock on first execution?
+#exec i3lock -i /usr/share/wallpapers/garuda-wallpapers/Garuda\ Desert.png
+
+# lock screen after 10 minutes TODO is this necessary?
+# TODO move locker to script.
+#exec --no-startup-id xautolock -time 10 -locker i3lock -i /usr/share/wallpapers/garuda-wallpapers/Garuda\ Desert.jpg
 
 # adjust monitor profiles
 exec_always --no-startup-id exec $desktop-environment-folder/scripts/monitor_profiles
@@ -11,240 +44,225 @@ exec_always --no-startup-id exec $desktop-environment-folder/scripts/monitor_pro
 # set keyboard layout with mappings
 exec_always --no-startup-id exec $desktop-environment-folder/scripts/keyboard_layout
 
-# set colorscheme
-exec_always --no-startup-id exec $desktop-environment-folder/scripts/colorscheme
+# enable touchpad gestures
+exec libinput-gestures
 
 # restart picom
-exec_always --no-startup-id exec $desktop-environment-folder/scripts/restart_picom
+#exec_always --no-startup-id exec $desktop-environment-folder/scripts/restart_picom
+
+# volume tray icon
+exec --no-startup-id pasystray
+
+# set background
+exec --no-startup-id nitrogen --restore; sleep 1; picom -b
+
+# text on background
+exec --no-startup-id conky  # system info
+#exec --no-startup-id conky -c ~/.config/conky/conky-shcts  # keybindings TODO (out of date)
+
+# clipboard manager
+exec --no-startup-id clipman
+
+# notification daemon
+exec --no-startup-id dunst
+
+# night mode display
+exec --no-startup-id redshift-gtk
+
+# printer management
+#exec --no-startup-id system-config-printer-applet  # manage printers
+#
+# wifi tray icon
+exec --no-startup-id nm-applet
+
+# authentication for programs that need su privelages to run
+exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
+
+exec --no-startup-id xfce4-power-manager
+
+# launch polybar
+#exec_always --no-startup-id ${HOME}/.config/polybar/launch.sh
+
+# turn on numlock
+#exec_always --no-startup-id numlockx on
 
 # set focus indicator and border width (have one of the two lines below commented)
 exec_always --no-startup-id exec $desktop-environment-folder/scripts/focus_indicate
 
-#for_window [class="^.*"] border pixel 0
-new_window 1pixel
+########################## }}}
+# Keybindings (Regular)  #
+########################## {{{
 
+# Use Mouse+$super to drag floating windows to their wanted position
+floating_modifier $super
 
-# Use pactl to adjust volume in PulseAudio.
-set $refresh_i3status killall -SIGUSR1 i3status
-bindsym XF86AudioRaiseVolume exec --no-startup-id "pactl set-sink-volume @DEFAULT_SINK@ +10% && $refresh_i3status; notify-send 'volume up'"
-bindsym XF86AudioLowerVolume exec --no-startup-id "pactl set-sink-volume @DEFAULT_SINK@ -10% && $refresh_i3status; notify-send 'volume down'"
-bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle && $refresh_i3status
-bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle && $refresh_i3status
+# run any program
+bindsym $super+space exec rofi -lines 12 -padding 18 -width 60 -location 0 -show drun -sidebar-mode -columns 3 -font 'Noto Sans 20'
 
-# brightness control
-# TODO manual script to make this seem more linear
-bindsym XF86MonBrightnessUp exec "brightnessctl s +10%; notify-send 'brightness up'"
-bindsym XF86MonBrightnessDown exec "brightnessctl s 10%-; notify-send 'brightness down'"
-
-# Screenshot
-bindsym Print exec --no-startup-id "deepin-screenshot -f"
-bindsym Shift+Print exec --no-startup-id "deepin-screenshot -n"
-
-# Use Mouse+$mod to drag floating windows to their wanted position
-floating_modifier $mod
+#--------------#
+# Applications #
+#--------------#
 
 # start a terminal
-bindsym $mod+Return exec --no-startup-id "$desktop-environment-folder/scripts/terminal"
-# start a terminal with the same cwd as the current focused program
-bindsym $mod+Control+Return exec --no-startup-id "$desktop-environment-folder/scripts/terminal_cwd"
+bindsym $super+Return exec --no-startup-id "$desktop-environment-folder/scripts/terminal"
+# TODO start a terminal with the same cwd as the current focused program. This will require a change to urxvt.
+#bindsym $super+Control+Return exec --no-startup-id "$desktop-environment-folder/scripts/terminal_cwd"
 
-# set output tty with run_file
-bindsym $mod+o exec --no-startup-id "$desktop-environment-folder/scripts/run_file -s"
+# TODO set output tty with run_file. Same as above.
+#bindsym $super+o exec --no-startup-id "$desktop-environment-folder/scripts/run_file -s"
 
 # open copied link in VLC
-bindsym $mod+v exec vlc "$(xsel -bo)"
+bindsym $super+v exec vlc "$(xsel -bo)"
 
 # start a browser
-bindsym $mod+Shift+Return exec default_browser
+bindsym $super+Shift+Return exec firefox
 
 # open file browser
-bindsym $mod+Shift+n exec --no-startup-id pcmanfm
-bindsym $mod+Shift+t exec --no-startup-id urxvt -s ranger
+bindsym $super+Shift+n exec --no-startup-id pcmanfm
+#bindsym $super+Shift+t exec --no-startup-id urxvt -s ranger
 
 # open emacs frame
-bindsym $mod+b exec --no-startup-id "notify-send -t 5000 'starting emacs'; emacsclient --create-frame --alternate-editor ''"
+bindsym $super+b exec --no-startup-id "notify-send -t 5000 'starting emacs'; emacsclient --create-frame --alternate-editor ''"
 # start emacs server
 
 # open emacs frame to clipboard (floating)
-bindsym $mod+c exec --no-startup-id "notify-send -t 5000 'starting emacs clipboard'; $desktop-environment-folder/i3/launch_emacs_edit_clipboard.sh;"
-
-# kill focused window
-bindsym $mod+Shift+q kill
-
-# Lock the screen
-bindsym $mod+Escape exec --no-startup-id blurlock
-# after 10 minutes
-exec --no-startup-id xautolock -time 10 -locker blurlock
-
-set_from_resource $col0 i3wm.color0 #f0f0f0
-set_from_resource $col1 i3wm.color1 #f0f0f0
-set_from_resource $col2 i3wm.color2 #f0f0f0
-set_from_resource $col3 i3wm.color3 #f0f0f0
-set_from_resource $col4 i3wm.color4 #f0f0f0
-set_from_resource $col5 i3wm.color5 #f0f0f0
-set_from_resource $col6 i3wm.color6 #f0f0f0
-set_from_resource $col7 i3wm.color7 #f0f0f0
-set_from_resource $col8 i3wm.color8 #f0f0f0
-
-set $noborder #ffffff00
-
-
-# class                 border    backgr.   text      indicator child_border
-client.focused          $noborder $col3     $col0     $col2     $col1
-client.focused_inactive $noborder $col0     $col8     $noborder $noborder
-client.unfocused        $noborder $col0     $col8     $noborder $noborder
-client.urgent           $noborder $col0     $col8     $noborder $noborder
-client.placeholder      $noborder $col0     $col8     $noborder $noborder
-
-client.background       $bg
-
-# PROTIP: You can also dynamically set dmenu's colors this way:
-#bindsym $mod+d exec dmenu_run -nb "$fg" -nf "$bg" -sb "$bg" -sf "$fg"
-
-# change focus
-bindsym $mod+h focus left
-bindsym $mod+j focus down
-bindsym $mod+k focus up
-bindsym $mod+l focus right
-
-# move focused window
-bindsym $mod+Shift+h move left
-bindsym $mod+Shift+j move down
-bindsym $mod+Shift+k move up
-bindsym $mod+Shift+l move right
-
-# move focused workspace
-bindsym $mod+Ctrl+l move workspace to output right
-
-# move to scratchpad
-bindsym $mod+minus move scratchpad
-bindsym $mod+plus scratchpad show
+bindsym $super+c exec --no-startup-id "notify-send -t 5000 'starting emacs clipboard'; $desktop-environment-folder/i3/launch_emacs_edit_clipboard.sh;"
 
 # math console (using sympy and qtconsole with jupyter-vim)
-bindsym $mod+Shift+m exec --no-startup-id $desktop-environment-folder/scripts/start_matheditor.py
-bindsym $mod+m [class="jupyter-qtconsole"] scratchpad show; [instance="math"] scratchpad show
+#bindsym $super+Shift+m exec --no-startup-id $desktop-environment-folder/scripts/start_matheditor.py
+#bindsym $super+m [class="jupyter-qtconsole"] scratchpad show; [instance="math"] scratchpad show
+
+########################## }}}
+# Misc Functions         #
+########################## {{{
+
+# kill focused window
+bindsym $super+Shift+q kill
+
+# change focus
+bindsym $super+h focus left
+bindsym $super+j focus down
+bindsym $super+k focus up
+bindsym $super+l focus right
+
+# move focused window
+bindsym $super+Shift+h move left
+bindsym $super+Shift+j move down
+bindsym $super+Shift+k move up
+bindsym $super+Shift+l move right
 
 # toggle split orientation
-bindsym $mod+s split toggle
+bindsym $super+s split toggle
 
 # enter fullscreen mode for the focused container
-bindsym $mod+f fullscreen toggle
+bindsym $super+f fullscreen toggle
+
+# move focused workspace to different monitor
+bindsym $super+Ctrl+l move workspace to output right
+
+# move to scratchpad
+bindsym $super+minus move scratchpad
+bindsym $super+plus scratchpad show
 
 # change container layout (stacked, tabbed, toggle split)
-bindsym $mod+p layout stacking
-bindsym $mod+comma layout tabbed
-bindsym $mod+period layout toggle split
+bindsym $super+p layout stacking
+bindsym $super+comma layout tabbed
+bindsym $super+period layout toggle split
 
 # toggle tiling / floating
-bindsym $mod+Shift+f floating toggle
+bindsym $super+Shift+f floating toggle
 
 # change focus between tiling / floating windows
-bindsym $mod+t focus mode_toggle
+bindsym $super+t focus mode_toggle
 
 # focus the parent container
-bindsym $mod+a focus parent
+bindsym $super+a focus parent
 
 # focus the child container
-#bindsym $mod+d focus child
+bindsym $super+d focus child
+
+# restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
+#bindsym $super+Shift+r exec autorandr -c && i3-msg restart
+bindsym $super+Shift+r restart
+
+# switch to workspace
+bindsym $super+1 workspace $ws1
+bindsym $super+2 workspace $ws2
+bindsym $super+3 workspace $ws3
+bindsym $super+4 workspace $ws4
+bindsym $super+5 workspace $ws5
+bindsym $super+6 workspace $ws6
+bindsym $super+7 workspace $ws7
+bindsym $super+8 workspace $ws8
+bindsym $super+9 workspace $ws9
+
+# move focused container to workspace
+bindsym $super+Shift+1 move container to workspace $ws1; workspace $ws1
+bindsym $super+Shift+2 move container to workspace $ws2; workspace $ws2
+bindsym $super+Shift+3 move container to workspace $ws3; workspace $ws3
+bindsym $super+Shift+4 move container to workspace $ws4; workspace $ws4
+bindsym $super+Shift+5 move container to workspace $ws5; workspace $ws5
+bindsym $super+Shift+6 move container to workspace $ws6; workspace $ws6
+bindsym $super+Shift+7 move container to workspace $ws7; workspace $ws7
+bindsym $super+Shift+8 move container to workspace $ws8; workspace $ws8
+bindsym $super+Shift+9 move container to workspace $ws9; workspace $ws9
+
+########################## }}}
+# Variables and Colors   #
+########################## {{{
+
+# colour of                  	border 		background, 	text, 		indicator, 	child_border
+client.focused             	#bf616a		#2f343f		#d8dee8		#bf616a		#d8dee8
+client.focused_inactive    	#2f343f		#2f343f		#d8dee8		#2f343f		#2f343f
+client.unfocused           	#2f343f		#2f343f		#d8dee8		#2f343f		#2f343f
+client.urgent              	#2f343f		#2f343f		#d8dee8		#2f343f		#2f343f
+client.placeholder         	#2f343f		#2f343f		#d8dee8		#2f343f		#2f343f
+client.background          	#2f343f 	
+
+# PROTIP: You can also dynamically set dmenu's colors this way:
+#bindsym $super+d exec dmenu_run -nb "$fg" -nf "$bg" -sb "$bg" -sf "$fg"
 
 # Define names for default workspaces for which we configure key bindings later on.
 # We use variables to avoid repeating the names in multiple places.
-set $ws1 "(1) Home"
-set $ws2 "(2) Code"
-set $ws3 "(3) Web"
-set $ws4 "(4)"
-set $ws5 "(5)"
-set $ws6 "(6)"
-set $ws7 "(7)"
-set $ws8 "(8)"
-set $ws9 "(9) Media"
-set $ws10 "(10)"
+set $ws1 "1"
+set $ws2 "2"
+set $ws3 "3"
+set $ws4 "4"
+set $ws5 "5"
+set $ws6 "6"
+set $ws7 "7"
+set $ws8 "8"
+set $ws9 "9"
 
 # Specify the distance between windows in pixels. (i3-gaps)
 gaps inner 40
 gaps outer 10
 
-# switch to workspace
-bindsym $mod+1 workspace $ws1
-bindsym $mod+2 workspace $ws2
-bindsym $mod+3 workspace $ws3
-bindsym $mod+4 workspace $ws4
-bindsym $mod+5 workspace $ws5
-bindsym $mod+6 workspace $ws6
-bindsym $mod+7 workspace $ws7
-bindsym $mod+8 workspace $ws8
-bindsym $mod+9 workspace $ws9
-bindsym $mod+0 workspace $ws10
+# disable borders when only one window
+smart_borders on
 
-# move focused container to workspace
-bindsym $mod+Shift+1 move container to workspace $ws1; workspace $ws1
-bindsym $mod+Shift+2 move container to workspace $ws2; workspace $ws2
-bindsym $mod+Shift+3 move container to workspace $ws3; workspace $ws3
-bindsym $mod+Shift+4 move container to workspace $ws4; workspace $ws4
-bindsym $mod+Shift+5 move container to workspace $ws5; workspace $ws5
-bindsym $mod+Shift+6 move container to workspace $ws6; workspace $ws6
-bindsym $mod+Shift+7 move container to workspace $ws7; workspace $ws7
-bindsym $mod+Shift+8 move container to workspace $ws8; workspace $ws8
-bindsym $mod+Shift+9 move container to workspace $ws9; workspace $ws9
-bindsym $mod+Shift+0 move container to workspace $ws10; workspace $ws10
+#bindsym $super+Shift+v exec --no-startup-id pavucontrol
 
-# restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
-bindsym $mod+Shift+r exec autorandr -c && i3-msg restart
 
-# exit i3 (logs you out of your X session)
-bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
-
-# start program launcher
-bindsym $mod+space exec --no-startup-id dmenu_recency
-
-bindsym $mod+Shift+v exec --no-startup-id pavucontrol
-
-################################################################################################
-## sound-section - DO NOT EDIT if you wish to automatically upgrade Alsa -> Pulseaudio later! ##
-################################################################################################
-
-# network-manager applet (daemon should be started by systemd)
-exec --no-startup-id nm-applet  # network (wifi)
-exec --no-startup-id blueman-applet  # bluetooth
-exec --no-startup-id xfce4-power-manager  # power + hibernate
-#exec --no-startup-id redshift-gtk  # redshift at night
-exec --no-startup-id system-config-printer-applet  # manage printers
-#exec --no-startup-id pulseaudio
-#exec --no-startup-id pa-applet
-
-################################################################################################
+########################## }}}
+# Modes                  #
+########################## {{{
 
 # resize window (you can also use the mouse for that)
 mode "resize" {
         # These bindings trigger as soon as you enter the resize mode
 
-        # Pressing left will shrink the window’s width.
-        # Pressing right will grow the window’s width.
-        # Pressing up will shrink the window’s height.
-        # Pressing down will grow the window’s height.
         bindsym h resize shrink width 1 px or 1 ppt
         bindsym j resize grow height 1 px or 1 ppt
         bindsym k resize shrink height 1 px or 1 ppt
         bindsym l resize grow width 1 px or 1 ppt
-
-        # same bindings, but for the arrow keys
-        bindsym Left resize shrink width 2 px or 2 ppt
-        bindsym Down resize grow height 2 px or 2 ppt
-        bindsym Up resize shrink height 2 px or 2 ppt
-        bindsym Right resize grow width 2 px or 2 ppt
 
         # quick adjustment
         bindsym Shift+h resize shrink width 10 px or 10 ppt
         bindsym Shift+j resize grow height 10 px or 10 ppt
         bindsym Shift+k resize shrink height 10 px or 10 ppt
         bindsym Shift+l resize grow width 10 px or 10 ppt
-
-        # same bindings, but for the arrow keys
-        bindsym Shift+Left resize shrink width 10 px or 10 ppt
-        bindsym Shift+Down resize grow height 10 px or 10 ppt
-        bindsym Shift+Up resize shrink height 10 px or 10 ppt
-        bindsym Shift+Right resize grow width 10 px or 10 ppt
-
+	#
         # change gaps interactively
         bindsym minus gaps inner current minus 6
         bindsym plus gaps inner current plus 6
@@ -256,35 +274,69 @@ mode "resize" {
         bindsym Escape mode "default"
 }
 
-bindsym $mod+r mode "resize"
+bindsym $super+r mode "resize"
 
+# Set shut down, restart and locking features
+bindsym $super+0 mode "$mode_system"
+set $mode_system (l)ock, (e)xit, switch_(u)ser, (s)uspend, (h)ibernate, (r)eboot, (Shift+s)hutdown
+mode "$mode_system" {
+    bindsym l exec i3lock -i "/usr/share/wallpapers/garuda-wallpapers/Garuda Desert.png", mode "default"
+    bindsym s exec --no-startup-id i3exit suspend, mode "default"
+    bindsym u exec --no-startup-id i3exit switch_user, mode "default"
+    bindsym e exec --no-startup-id i3exit logout, mode "default"
+    bindsym h exec --no-startup-id i3exit hibernate, mode "default"
+    bindsym r exec --no-startup-id i3exit reboot, mode "default"
+    bindsym Shift+s exec --no-startup-id i3exit shutdown, mode "default"
+
+    # exit system mode: "Enter" or "Escape"
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
 
 bar {
-	i3bar_command i3bar
-	status_command i3status
-	position top
+	status_command exec /usr/bin/net-speed.sh
+	#strip_workspace_numbers yes|no
+	#strip_workspace_name yes|no
+	colors {
+    background #2f343f
+    statusline #FFFFFF
+    separator  #666666
 
-## please set your primary output first. Example: 'xrandr --output eDP1 --primary'
-#	tray_output primary
-#	tray_output eDP1
-
-	bindsym button4 nop
-	bindsym button5 nop
-#   font xft:URWGothic-Book 11
-	strip_workspace_numbers yes
-
-    colors {
-        background $col0
-        statusline $col1
-        separator  $col7
-
-#                      border  backgr. text
-        focused_workspace  $col0 $col2 $col0
-        active_workspace   $col0 $col0 #FDF6E3
-        inactive_workspace $col0 $col0 #EEE8D5
-        binding_mode       $col0 $col0 #F9FAF9
-        urgent_workspace   $col0 $col0 #E5201D
+    focused_workspace  #4C7899 #285577 #FFFFFF
+    active_workspace   #333333 #222222 #FFFFFF
+    inactive_workspace #333333 #222222 #888888
+    urgent_workspace   #2F343A #900000 #FFFFFF
+    #binding_mode      #2F343A #900000 #FFFFFF
+    # colour of border, background, and text    
     }
+    
 }
+#bar {
+#	i3bar_command i3bar
+#	status_command i3status
+#	position top
+#
+### please set your primary output first. Example: 'xrandr --output eDP1 --primary'
+##	tray_output primary
+##	tray_output eDP1
+#
+#	bindsym button4 nop
+#	bindsym button5 nop
+##   font xft:URWGothic-Book 11
+#	strip_workspace_numbers yes
+#
+#    colors {
+#        background $col0
+#        statusline $col1
+#        separator  $col7
+#
+##                      border  backgr. text
+#        focused_workspace  $col0 $col2 $col0
+#        active_workspace   $col0 $col0 #FDF6E3
+#        inactive_workspace $col0 $col0 #EEE8D5
+#        binding_mode       $col0 $col0 #F9FAF9
+#        urgent_workspace   $col0 $col0 #E5201D
+#    }
+#}
