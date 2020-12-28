@@ -1,0 +1,70 @@
+!! Colors {{{
+
+! for testing colors:
+! nvim xresources; xrdb xresources; urxvt -e sh -c "/home/alexe/.config/desktop-environment/scripts/print_colors; zsh" &
+
+! special
+*.foreground:   #8a6a53
+!Dark Brown Background#
+*background: #181514
+!Light Brown Background# 
+!*background:   #2c251c
+*cursorColor:  #8a6a53
+
+! black
+*color0:       #4c4234
+*color8:       #322a21
+
+! red
+*color1:       #94525a
+*color9:       #df6a95
+
+! green
+*color2:       #758365
+*color10:      #a6bca4
+
+! yellow
+*color3:       #a2bb30
+*color11:      #ceed3b
+
+! blue
+*color4:       #22363b
+*color12:      #4f789f
+
+! magenta
+*color5:       #7d323f
+*color13:      #a74354
+
+! cyan
+*color6:       #40696e
+*color14:      #3e9182
+
+! white
+*color7:       #8a6a53
+*color15:      #f0d7c2
+! }}}
+
+!! Fonts {{{
+URxvt.font: xft:Source Code Pro:style=Regular:size=12,xft:MesloLGS NF:style=Medium:size=12
+URxvt.boldFont: xft:Source Code Pro:style=Bold:size=12,xft:MesloLGS NF:style=Medium:size=12
+URxvt.italicFont: xft:Source Code Pro:style=Italic:size=12,xft:MesloLGS NF:style=Medium:size=12
+URxvt.boldItalicFont: xft:Source Code Pro:style=Bold Italic:size=12,xft:MesloLGS NF:style=Medium:size=12
+URxvt.letterSpace: -1
+URxvt.lineSpace: 0
+URxvt.geometry: 92x24
+URxvt.internalBorder: 12
+URxvt.cursorBlink: true
+URxvt.cursorUnderline: false
+URxvt.saveline: 2048
+URxvt.scrollBar: false
+URxvt.scrollBar_right: false
+URxvt.urgentOnBell: false
+URxvt.depth: 24
+URxvt.iso14755: false
+
+! }}}
+
+!! Keybindings {{{
+URxvt.keysym.Shift-Control-C: eval:selection_to_clipboard
+URxvt.keysym.Shift-Control-V: eval:paste_clipboard
+! }}}
