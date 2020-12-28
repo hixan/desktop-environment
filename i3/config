@@ -89,6 +89,9 @@ exec --no-startup-id xfce4-power-manager
 # set focus indicator and border width (have one of the two lines below commented)
 exec_always --no-startup-id exec $desktop-environment-folder/scripts/focus_indicate
 
+# x resources
+exec_always --no-startup-id xrdb $desktop-environment-folder/xresources
+
 ########################## }}}
 # Keybindings (Regular)  #
 ########################## {{{
@@ -106,7 +109,7 @@ bindsym $super+space exec rofi -lines 12 -padding 18 -width 60 -location 0 -show
 # start a terminal
 bindsym $super+Return exec --no-startup-id "$desktop-environment-folder/scripts/terminal"
 # TODO start a terminal with the same cwd as the current focused program. This will require a change to urxvt.
-#bindsym $super+Control+Return exec --no-startup-id "$desktop-environment-folder/scripts/terminal_cwd"
+bindsym $super+Control+Return exec --no-startup-id "$desktop-environment-folder/scripts/terminal_cwd"
 
 # TODO set output tty with run_file. Same as above.
 #bindsym $super+o exec --no-startup-id "$desktop-environment-folder/scripts/run_file -s"
