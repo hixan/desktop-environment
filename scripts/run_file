@@ -75,7 +75,7 @@ def run_python_test():
         process = Popen(['pytest', '--color=yes'], stderr=f, stdout=f).communicate()
         print('\n'*3, file=f)
 
-def clear_terminal(tty: str):
+def clear_terminal(tty: Path):
     # clear console
     with tty.open('w') as f:
         f.write('\033[2J\033[2H')
