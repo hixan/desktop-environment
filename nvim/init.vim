@@ -71,8 +71,11 @@ nmap <leader>o :only<CR>
 " git diffs in modeline
 set updatetime=100
 
+" git diffs highlight color (same as line number settings)
+hi! link SignColumn LineNr
 " change folded color (to be different from comments)
-hi Folded ctermfg=6
+hi Folded ctermfg=1
+hi Folded ctermbg=4
 
 "################### Jupyter Notebook ##########################
 " jupytext to open as .py format
