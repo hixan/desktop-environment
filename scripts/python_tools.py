@@ -65,7 +65,7 @@ def print_output(pcs: Popen):
     return pcs
     
 def get_tty(pid: str):
-    rv = get_field(Popen(['ps', '-q', pid, 'axo', 'tty'], stdout=PIPE), skiplines=1)
+    rv = get_field(Popen(['ps', '-q', get_child_pid(pid), 'axo', 'tty'], stdout=PIPE), skiplines=1)
     if rv == '?':
         return False
     return rv
@@ -77,10 +77,13 @@ def get_wd(pid):
     else:
         raise RuntimeError(f'workspace {symlink} does not exist.')
 
+def get_child_pid(pid):
+    return get_field(Popen(['pgrep', '-P', pid], stdout=PIPE))
+
 def get_active_wd():
     '''gets the active windows first child process's working directory (hopefully the terminal)'''
     pid = get_active_pid()
-    child_pid = get_field(Popen(['pgrep', '-P', pid], stdout=PIPE))
+    child_pid = get_child_pid(pid)
     return(get_wd(child_pid))
 
 def is_python_file(file: Path):
