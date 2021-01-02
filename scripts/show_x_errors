@@ -1,0 +1,3 @@
+#!/bin/sh
+
+notify-send "$(tail -n 20 /home/alexe/.xsession-errors)"
