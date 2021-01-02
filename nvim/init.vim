@@ -46,9 +46,6 @@ Plug 'nvie/vim-flake8'
 "Plug 'jalvesaq/Nvim-R', {'branch': 'stable'}
 call plug#end()
 
-" enable pywal colorscheme
-colorscheme wal
-
 " line numbers
 set rnu
 set nu
@@ -74,7 +71,6 @@ nmap <leader>o :only<CR>
 
 " git diffs in modeline
 set updatetime=100
-
 " git diffs highlight color (same as line number settings)
 hi! link SignColumn LineNr
 " change folded color (to be different from comments)
@@ -125,6 +121,8 @@ autocmd filetype r setlocal tabstop=2 shiftwidth=2
 
 "#################### Python Files ############################
 
+" run python tests
+ autocmd filetype python nnoremap <buffer> <silent> <localleader>t :!a=$(pwd); cd $(git rev-parse --show-toplevel); coproc ~/.config/desktop-environment/scripts/run_file < <(pytest --color=yes); cd $a<CR>
 
 "###################### Javascript #############################
 " javascript folding
