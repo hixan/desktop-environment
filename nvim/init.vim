@@ -36,9 +36,6 @@ Plug 'goerz/jupytext.vim'
 " surround text objects with quotes, brackets, etc
 Plug 'tpope/vim-surround'
 
-" pywal integration with nvim
-Plug 'dylanaraps/wal.vim'
-
 " easy alignment of comments, code, etc
 Plug 'junegunn/vim-easy-align'
 
