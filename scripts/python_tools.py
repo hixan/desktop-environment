@@ -1,20 +1,35 @@
 from subprocess import Popen, PIPE
 from pathlib import Path
-import os
+from typing import Union
+import os, sys, re
 
 DIR = Path(os.getenv('HOME'))/'.config'/'desktop-environment'
 METADIR = DIR/'meta'
 SCRIPTSDIR = DIR / 'scripts'
 
-def get_field(response: Popen, cut: int=-1, skiplines: int=0):
-    return response.stdout.readlines()[skiplines].decode('utf-8').strip().split()[cut]
+def get_field(s: Union[str, Popen], cut: int=-1, skiplines: int=0):
+    '''return the cut element (seperated by whitespace) from the skiplines-th line.
+
+    By default, returns the last item of the first line.'''
+    if type(s) is Popen:
+        s = s.communicate()[0].decode('utf-8')
+    s.split('\n')[skiplines].strip().split()[cut]
+    return s.split('\n')[skiplines].strip().split()[cut]
 
 def get_active_window():
     return get_field(Popen(['xprop', '-root', '_NET_ACTIVE_WINDOW'], stdout=PIPE))
 
 def get_active_pid():
     wid = get_active_window()
-    return str(int(get_field(Popen(['xprop', '-id', wid, '_NET_WM_PID'], stdout=PIPE))) + 1)
+    print(get_window_info(wid, '_NET_WM_PID'), file=sys.stderr)
+    return get_field(get_window_info(wid, '_NET_WM_PID'))
+
+def get_window_info(wid, atom=None):
+    args = ['xprop', '-id', wid]
+    if atom is not None:
+        args.append(atom)
+    x = Popen(args, stdout=PIPE).stdout.read()
+    return x.decode('utf-8')
 
 def float_window(window_process):
     wid = get_windowid(window_process.pid, rint=True)
@@ -50,17 +65,23 @@ def print_output(pcs: Popen):
     return pcs
     
 def get_tty(pid: str):
-    print(pid)
-    if (rv := get_field(Popen(['ps', '-q', pid, 'axo', 'tty'], stdout=PIPE), skiplines=1)) == '?':
+    rv = get_field(Popen(['ps', '-q', pid, 'axo', 'tty'], stdout=PIPE), skiplines=1)
+    if rv == '?':
         return False
     return rv
 
-def get_active_wd():
-    pid = get_active_pid()
-    symlink = Path('/proc/') / pid / 'cwd' 
+def get_wd(pid):
+    symlink = Path('/proc/') / pid / 'cwd'
     if symlink.exists():
         return get_field(Popen(['readlink', str(symlink)], stdout=PIPE))
-    raise RuntimeError('Could not retrieve active workspace')
+    else:
+        raise RuntimeError(f'workspace {symlink} does not exist.')
+
+def get_active_wd():
+    '''gets the active windows first child process's working directory (hopefully the terminal)'''
+    pid = get_active_pid()
+    child_pid = get_field(Popen(['pgrep', '-P', pid], stdout=PIPE))
+    return(get_wd(child_pid))
 
 def is_python_file(file: Path):
     assert file.exists(), f'file "{file.absolute()}" does not exist'
