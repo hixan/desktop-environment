@@ -1,24 +1,31 @@
 set clipboard=unnamedplus
 set mouse=a
+" statusline
+" statusline
+set laststatus=2
+set statusline=
+set statusline+=%f
+set statusline+=\%m
+set statusline+=\ %y
+set statusline+=\ pos:\ %l,%c
+"set statusline+=\ %{coc#status()}
+set statusline+=\ %{kite#statusline()}
+set statusline+=%=  " switch to the right side
+set statusline+=\ lines:\ %L
+set statusline+=\ b:\ %n
+
 call plug#begin('~/.config/nvim/plugged')
-"
+
 " python syntax highlighting
 Plug 'numirias/semshi', {'do': ':UpdateRemotePlugins'}
-"
-" python autocompletion
-Plug 'neoclide/coc.nvim'
+
+" python autocompletion handled by kite
 
 " Git diffs in margin
 Plug 'airblade/vim-gitgutter'
 
-" javascript
-Plug 'pangloss/vim-javascript'
-"
 " python folding
 Plug 'tmhedberg/SimpylFold'
-
-" python docstrings
-Plug 'heavenshell/vim-pydocstring', { 'do': 'make install' }
 
 " jupyter qtconsole integration
 Plug 'jupyter-vim/jupyter-vim'
@@ -77,6 +84,13 @@ hi! link SignColumn LineNr
 hi Folded ctermfg=1
 hi Folded ctermbg=4
 
+" kite settings
+set completeopt+=menuone   " Show the completions UI even with only 1 item
+set completeopt-=preview   " Show the documentation preview window
+set completeopt+=longest   " Insert the longest common text
+set completeopt-=noinsert  " Don't insert text automatically
+set completeopt+=noselect  " Don't highlight the first completion automatically
+
 "################### Jupyter Notebook ##########################
 " jupytext to open as .py format
 let g:jupytext_fmt = 'py'
@@ -113,12 +127,7 @@ let r_indent_align_args = 0
 autocmd filetype r setlocal tabstop=2 shiftwidth=2
 
 "#################### Python Files ############################
-" enable deoplete (completion help)
-let g:deoplete#enable_at_startup = 1
 
-" enable jedi keybindings (things like code jumping etc)
-let g:jedi#auto_initialization = 1
-let g:jedi#auto_vim_configuration = 1
 
 "###################### Javascript #############################
 " javascript folding
