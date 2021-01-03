@@ -122,7 +122,19 @@ autocmd filetype r setlocal tabstop=2 shiftwidth=2
 "#################### Python Files ############################
 
 " run python tests
- autocmd filetype python nnoremap <buffer> <silent> <localleader>t :!a=$(pwd); cd $(git rev-parse --show-toplevel); coproc ~/.config/desktop-environment/scripts/run_file < <(pytest --color=yes); cd $a<CR>
+ autocmd filetype python nnoremap <buffer> <silent> <localleader>t :silent !
+			 \a=$(pwd);
+			 \cd $(git rev-parse --show-toplevel);
+			 \coproc run_file
+			 \< <(script -eqc
+			     \"COLUMNS=$(run_file -S C) pytest -v");
+			 \cd $a<CR>
+ " save working directory
+ " go to git repository root
+ " `coproc` runs in background
+ " run_file < <(...) pipes output of ... to run_file
+ " script -eqc tricks the next argument to be run in an interactive terminal
+ " change back to the original wd
 
 "###################### Javascript #############################
 " javascript folding

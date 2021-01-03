@@ -13,14 +13,18 @@ metafile.parent.mkdir(parents=True, exist_ok=True)
 
 @click.command()
 @click.option('--file', '-f', is_flag=False, help='File to run. Ignored if used with -s or --set-tty')
+@click.option('--get-size', '-S', is_flag=False, help='Get the number of columns (width) of the output terminal')
 @click.option('--set-tty', '-s', is_flag=True, help='Set the output TTY to the TTY connected to the active terminal. Does nothing if there is no TTY connected. If this flag is set, --file is ignored.')
 @click.option('--pytest', '-t', is_flag=True, help='run a testing suite with pytest')
-def main(file: str = None, set_tty: bool = False, pytest: bool = False):
+def main(file: str = None, get_size: str = None, set_tty: bool = False, pytest: bool = False):
     '''this script executes FILE and sends output to a cached TTY.
 
     If no options are selected, STDIN is routed straight to the cached TTY.'''
-    if not (file or set_tty or pytest):
+    if not (file or set_tty or pytest or get_size):
         send_to_tty()
+
+    if get_size:
+        print_size('C' in get_size, 'R' in get_size)
 
     if set_tty:
         save_tty()
@@ -35,6 +39,16 @@ def main(file: str = None, set_tty: bool = False, pytest: bool = False):
         else:
             raise NotImplementedError
 
+
+def print_size(r_col, r_row):
+    tty = load_tty()
+    rows, columns = Popen(['stty', '-F', tty, 'size'], stdout=PIPE).communicate()[0].decode('utf-8').split()
+    rv = []
+    if r_col:
+        rv.append(columns)
+    if r_row:
+        rv.append(rows)
+    print(*rv)
 
 def save_tty():
     # get_tty returns false if it could not find a tty connected.
@@ -55,7 +69,7 @@ def send_to_tty(clear=False):
         clear_terminal(tty)
     with open(tty, 'w') as f:
         for line in sys.stdin:
-            print(line, file=f)
+            print(line, file=f, end='')
 
 
 def run_python_file(file: Path):
