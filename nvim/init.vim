@@ -125,14 +125,33 @@ autocmd filetype r setlocal tabstop=2 shiftwidth=2
  autocmd filetype python nnoremap <buffer> <silent> <localleader>t :w<CR> :silent !
 			 \a=$(pwd);
 			 \cd $(git rev-parse --show-toplevel);
-			 \to_tty -i i3 -c "pytest -v";
-			 \to_tty -i i3 -c "echo; echo; echo; echo";
+			 \to_tty -i i3 -c "echo -e '\n\n\n\n'; pytest -v";
 			 \cd $a<CR>
  " save working directory
  " go to git repository root
  " use to_tty to run the test suite and output to the target tty
  " change back to the original wd
  
+ " run current function
+ autocmd filetype python nnoremap <buffer> <silent> <localleader>T :w<CR> 
+			 \:0,s/def\W\+\(.*\)\>/\=setreg('q', submatch(1))/n<CR>
+			 \:let $function=@q<CR>
+			 \:silent !
+			 \prefix=$(git rev-parse --show-prefix);
+			 \filename="$prefix"%;
+			 \cd $(git rev-parse --show-toplevel);
+			 \to_tty -i i3 -c "echo -e '\n\n\n\n'; pytest -v $filename::$function";
+			 \cd $prefix<CR>
+ " explanation:
+ " find previous match for the regex and set group 1 to be in the q register
+ " export that to the environment variable $function
+ " start silent execution of an external command
+ " save current relative path
+ " set the filename to be the relative path and the current file name
+ " cd to the root of the git repo
+ " run the pytest function and send to tty
+ " cd back to the saved location
+
  " run python file
  autocmd filetype python nnoremap <buffer> <silent> <localleader>r :w<CR> :silent !
 			 \to_tty -i i3 -c "python %"
