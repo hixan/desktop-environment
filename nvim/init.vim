@@ -121,20 +121,22 @@ autocmd filetype r setlocal tabstop=2 shiftwidth=2
 
 "#################### Python Files ############################
 
-" run python tests
- autocmd filetype python nnoremap <buffer> <silent> <localleader>t :silent !
+" run all python tests
+ autocmd filetype python nnoremap <buffer> <silent> <localleader>t :w<CR> :silent !
 			 \a=$(pwd);
 			 \cd $(git rev-parse --show-toplevel);
-			 \coproc run_file
-			 \< <(script -eqc
-			     \"COLUMNS=$(run_file -S C) pytest -v");
+			 \to_tty -i i3 -c "pytest -v";
+			 \to_tty -i i3 -c "echo; echo; echo; echo";
 			 \cd $a<CR>
  " save working directory
  " go to git repository root
- " `coproc` runs in background
- " run_file < <(...) pipes output of ... to run_file
- " script -eqc tricks the next argument to be run in an interactive terminal
+ " use to_tty to run the test suite and output to the target tty
  " change back to the original wd
+ 
+ " run python file
+ autocmd filetype python nnoremap <buffer> <silent> <localleader>r :w<CR> :silent !
+			 \to_tty -i i3 -c "python %"
+			 \<CR>
 
 "###################### Javascript #############################
 " javascript folding
