@@ -121,41 +121,41 @@ autocmd filetype r setlocal tabstop=2 shiftwidth=2
 
 "#################### Python Files ############################
 
+function! ToTTY(call, termkey)
+	"echom 'calling "' . a:call . '" in terminal "' . a:termkey . '"'
+	" save root of git repo and relative wd
+	let root = system('git rev-parse --show-toplevel')
+	let prefix = system('git rev-parse --show-prefix')
+
+	" save tty call (with double quote)
+	let ttycall = 'to_tty -i ' . a:termkey . ' -c "'
+	echom ttycall
+	call system('cd '.root)
+	call system(ttycall . "echo -e '\n\n\n\n'" . '"')
+	call system(ttycall . a:call . '"')
+	call system('cd '.prefix)
+endfunction
+
 " run all python tests
- autocmd filetype python nnoremap <buffer> <silent> <localleader>t :w<CR> :silent !
-			 \a=$(pwd);
-			 \cd $(git rev-parse --show-toplevel);
-			 \to_tty -i i3 -c "echo -e '\n\n\n\n'; pytest -v";
-			 \cd $a<CR>
- " save working directory
- " go to git repository root
- " use to_tty to run the test suite and output to the target tty
- " change back to the original wd
- 
+ autocmd filetype python nnoremap <buffer> <silent> <localleader>t :w<CR>
+			 \:let $call = 'pytest -v'<CR>
+			 \:silent call ToTTY($call, 'i3')<CR>
+
  " run current function
- autocmd filetype python nnoremap <buffer> <silent> <localleader>T :w<CR> 
-			 \:0,s/def\W\+\(.*\)\>/\=setreg('q', submatch(1))/n<CR>
-			 \:let $function=@q<CR>
-			 \:silent !
-			 \prefix=$(git rev-parse --show-prefix);
-			 \filename="$prefix"%;
-			 \cd $(git rev-parse --show-toplevel);
-			 \to_tty -i i3 -c "echo -e '\n\n\n\n'; pytest -v $filename::$function";
-			 \cd $prefix<CR>
- " explanation:
- " find previous match for the regex and set group 1 to be in the q register
- " export that to the environment variable $function
- " start silent execution of an external command
- " save current relative path
- " set the filename to be the relative path and the current file name
- " cd to the root of the git repo
- " run the pytest function and send to tty
- " cd back to the saved location
+ autocmd filetype python nnoremap <buffer> <silent> <localleader>T :w<CR>
+			 \:silent 0,s/^def\W\+\(\w\+\)/\=setreg('q', submatch(1))/n<CR>
+			 \:let $call="pytest -v " . $prefix . expand('%') . "::" . @q<CR>
+			 \:call ToTTY($call, 'i3')<CR>
 
  " run python file
- autocmd filetype python nnoremap <buffer> <silent> <localleader>r :w<CR> :silent !
-			 \to_tty -i i3 -c "python %"
-			 \<CR>
+ autocmd filetype python nnoremap <buffer> <silent> <localleader>r :w<CR>
+			 \:let $call="python " . expand('%:p')<CR>
+			 \:call ToTTY($call, 'i3')<CR>
+
+ " run previous call
+ autocmd filetype python nnoremap <buffer> <silent> <localleader>p :w<CR>
+			 \:call ToTTY($call, 'i3')<CR>
+
 
 "###################### Javascript #############################
 " javascript folding
