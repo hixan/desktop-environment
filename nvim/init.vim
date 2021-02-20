@@ -169,3 +169,5 @@ let g:javascript_conceal_null                 = "ø"
 autocmd FileType javascript setlocal conceallevel=1
 
 
+"####################### JSON ##################################
+autocmd FileType json setlocal cole=3
