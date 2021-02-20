@@ -128,10 +128,10 @@ function! ToTTY(call, termkey)
 	" save tty call (with double quote)
 	let ttycall = 'to_tty -i ' . a:termkey . ' -c "'
 	echom ttycall
-	call system('cd '.root)
-	call system(ttycall . "echo -e '\n\n\n\n'" . '"')
-	call system(ttycall . a:call . '"')
-	call system('cd '.prefix)
+	call system('cd ' . root . ';' .
+				\ttycall . "echo -e '\n\n\n\n'" . '";' .
+				\ttycall . a:call . '";' .
+				\'cd "' . prefix . '";')
 endfunction
 
 " run all python tests
