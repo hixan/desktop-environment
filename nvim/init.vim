@@ -166,5 +166,6 @@ augroup END
 let g:javascript_conceal_function             = "ƒ"
 let g:javascript_conceal_null                 = "ø"
 "let g:javascript_conceal_underscore_arrow_function = "🞅"
+autocmd FileType javascript setlocal conceallevel=1
 
-set conceallevel=1
+
