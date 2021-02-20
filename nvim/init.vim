@@ -27,20 +27,18 @@ Plug 'airblade/vim-gitgutter'
 " python folding
 Plug 'tmhedberg/SimpylFold'
 
-" jupyter qtconsole integration
-Plug 'jupyter-vim/jupyter-vim'
+" jupyter qtconsole integration TODO this is broken
+" Plug 'jupyter-vim/jupyter-vim'
 
-" jupyter notebook integration
-Plug 'goerz/jupytext.vim'
+" jupyter notebook integration TODO this is also broken (depends on qtconsole
+" integration)
+"Plug 'goerz/jupytext.vim'
 
 " surround text objects with quotes, brackets, etc
 Plug 'tpope/vim-surround'
 
 " easy alignment of comments, code, etc
-Plug 'junegunn/vim-easy-align'
-
-" style guides and syntax errors
-Plug 'nvie/vim-flake8'
+"Plug 'junegunn/vim-easy-align'
 
 " R-lang in vim!
 "Plug 'jalvesaq/Nvim-R', {'branch': 'stable'}
