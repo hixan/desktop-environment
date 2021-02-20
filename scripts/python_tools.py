@@ -21,7 +21,6 @@ def get_active_window():
 
 def get_active_pid():
     wid = get_active_window()
-    print(get_window_info(wid, '_NET_WM_PID'), file=sys.stderr)
     return get_field(get_window_info(wid, '_NET_WM_PID'))
 
 def get_window_info(wid, atom=None):
@@ -60,9 +59,11 @@ def get_battery_info():
     charge = int(s_charge[:-2])
     return discharging, charge
 
-def print_output(pcs: Popen):
-    print(pcs.stdout.read())
-    return pcs
+#def print_output(pcs: Popen):
+#    # not sure where this is used - will use this for a while to ensure that i can remove it.
+#    Popen(['notify-send', f'print_output was used with process {pcs}']).communicate()
+#    print(pcs.stdout.read())
+#    return pcs
     
 def get_tty(pid: str):
     rv = get_field(Popen(['ps', '-q', get_child_pid(pid), 'axo', 'tty'], stdout=PIPE), skiplines=1)
