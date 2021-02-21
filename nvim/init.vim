@@ -27,12 +27,11 @@ Plug 'airblade/vim-gitgutter'
 " python folding
 Plug 'tmhedberg/SimpylFold'
 
-" jupyter qtconsole integration TODO this is broken
-" Plug 'jupyter-vim/jupyter-vim'
+" jupyter qtconsole integration
+Plug 'jupyter-vim/jupyter-vim'
 
-" jupyter notebook integration TODO this is also broken (depends on qtconsole
-" integration)
-"Plug 'goerz/jupytext.vim'
+" jupyter notebook integration
+Plug 'goerz/jupytext.vim'
 
 " surround text objects with quotes, brackets, etc
 Plug 'tpope/vim-surround'
@@ -92,27 +91,25 @@ let g:jupytext_to_ipynb_opts = '--to=ipynb --update'
 " overwrite default configs
 let g:jupyter_mapkeys = 0
 
-" Run current file
-nnoremap <buffer> <silent> <localleader>R :JupyterRunFile<CR>
-nnoremap <buffer> <silent> <localleader>I :PythonImportThisFile<CR>
+function! SetJupyterOptions()
+	" Run current file
+	nnoremap <buffer> <silent> <localleader>R :JupyterRunFile<CR>
+	"nnoremap <buffer> <silent> <localleader>I :PythonImportThisFile<CR>
 
-" Change to directory of current file
-nnoremap <buffer> <silent> <localleader>d :JupyterCd %:p:h<CR>
+	" Send a selection of lines
+	nmap     <buffer> <silent> <localleader>c <Plug>JupyterRunTextObj
+	vmap     <buffer> <silent> <localleader>c <Plug>JupyterRunVisual
 
-" Send a selection of lines
-nnoremap <buffer> <silent> <localleader>C :JupyterSendCell<CR>
-nnoremap <buffer> <silent> <localleader>. :JupyterSendRange<CR>
-nmap     <buffer> <silent> <localleader>c <Plug>JupyterRunTextObj
-vmap     <buffer> <silent> <localleader>c <Plug>JupyterRunVisual
+	" clear the output terminal screen
+	nnoremap <buffer> <silent> <localleader>l :norm oprint('\033[2J]')<ESC>:JupyterSendRange<CR>dd
 
-" clear the output terminal screen
-nnoremap <buffer> <silent> <localleader>l :norm oprint('\033[2J]')<ESC>:JupyterSendRange<CR>dd
+	nnoremap <buffer> <silent> <localleader>U :JupyterUpdateShell<CR>
 
-nnoremap <buffer> <silent> <localleader>U :JupyterUpdateShell<CR>
+	" Debugging maps
+	nnoremap <buffer> <silent> <localleader>b :PythonSetBreak<CR>
+endfunction
 
-" Debugging maps
-nnoremap <buffer> <silent> <localleader>b :PythonSetBreak<CR>
-
+call SetJupyterOptions()
 " }}}
 "####################### R files ###########################################{{{
 " fix R indentation
@@ -137,26 +134,29 @@ function! ToTTY(call, termkey)
 				\'cd "' . prefix . '";')
 endfunction
 
-" run all python tests
- autocmd filetype python nnoremap <buffer> <silent> <localleader>t :w<CR>
-			 \:let $call = 'pytest -v'<CR>
-			 \:silent call ToTTY($call, 'i3')<CR>
+function! SetPythonOptions()
+	" run all python tests
+	 nnoremap <buffer> <silent> <localleader>t :w<CR>
+				 \:let $call = 'pytest -v'<CR>
+				 \:silent call ToTTY($call, 'i3')<CR>
 
- " run current function
- autocmd filetype python nnoremap <buffer> <silent> <localleader>T :w<CR>
-			 \:silent 0,s/^def\W\+\(\w\+\)/\=setreg('q', submatch(1))/n<CR>
-			 \:let $call="pytest -v " . $prefix . expand('%') . "::" . @q<CR>
-			 \:call ToTTY($call, 'i3')<CR>
+	 " run current function
+	 nnoremap <buffer> <silent> <localleader>T :w<CR>
+				 \:silent 0,s/^def\W\+\(\w\+\)/\=setreg('q', submatch(1))/n<CR>
+				 \:let $call="pytest -v " . $prefix . expand('%') . "::" . @q<CR>
+				 \:call ToTTY($call, 'i3')<CR>
 
- " run python file
- autocmd filetype python nnoremap <buffer> <silent> <localleader>r :w<CR>
-			 \:let $call="python " . expand('%:p')<CR>
-			 \:call ToTTY($call, 'i3')<CR>
+	 " run python file
+	 nnoremap <buffer> <silent> <localleader>r :w<CR>
+				 \:let $call="python " . expand('%:p')<CR>
+				 \:call ToTTY($call, 'i3')<CR>
 
- " run previous call
- autocmd filetype python nnoremap <buffer> <silent> <localleader>p :w<CR>
-			 \:call ToTTY($call, 'i3')<CR>
+	 " run previous call
+	 nnoremap <buffer> <silent> <localleader>p :w<CR>
+				 \:call ToTTY($call, 'i3')<CR>
+ endfunction
 
+autocmd filetype python call SetPythonOptions()
 
 " }}}
 "####################### Javascript ########################################{{{
@@ -177,4 +177,5 @@ autocmd FileType javascript setlocal conceallevel=1
 autocmd FileType json setlocal cole=3
 "}}}
 "####################### vimscript #########################################{{{
+autocmd filetype vim set foldmethod=marker
 "}}}
