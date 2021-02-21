@@ -1,7 +1,6 @@
 set clipboard=unnamedplus
 set mouse=a
-" statusline
-" statusline
+" statusline {{{
 set laststatus=2
 set statusline=
 set statusline+=%f
@@ -13,8 +12,9 @@ set statusline+=\ %{kite#statusline()}
 set statusline+=%=  " switch to the right side
 set statusline+=\ lines:\ %L
 set statusline+=\ b:\ %n
+" }}}
 
-call plug#begin('~/.config/nvim/plugged')
+call plug#begin('~/.config/nvim/plugged') " {{{
 
 " python syntax highlighting
 Plug 'numirias/semshi', {'do': ':UpdateRemotePlugins'}
@@ -42,11 +42,9 @@ Plug 'tpope/vim-surround'
 
 " R-lang in vim!
 "Plug 'jalvesaq/Nvim-R', {'branch': 'stable'}
-call plug#end()
+call plug#end() " }}}
 
-" line numbers
-set rnu
-set nu
+"####################### ALL ###############################################{{{
 
 " better leader
 let mapleader="\<Space>"
@@ -58,7 +56,11 @@ set scrolloff=9999
 " wrap on whitespace
 set nolist wrap linebreak breakat&vim
 
-"#################### ALL ######################################
+
+" line numbers
+set rnu
+set nu
+
 " Start interactive EasyAlign in visual mode (e.g. vipga)
 xmap ga <Plug>(EasyAlign)
 
@@ -81,8 +83,8 @@ set completeopt-=preview   " Show the documentation preview window
 set completeopt+=longest   " Insert the longest common text
 set completeopt-=noinsert  " Don't insert text automatically
 set completeopt+=noselect  " Don't highlight the first completion automatically
-
-"################### Jupyter Notebook ##########################
+" }}}
+"####################### Jupyter Notebook ##################################{{{
 " jupytext to open as .py format
 let g:jupytext_fmt = 'py'
 let g:jupytext_to_ipynb_opts = '--to=ipynb --update'
@@ -111,13 +113,15 @@ nnoremap <buffer> <silent> <localleader>U :JupyterUpdateShell<CR>
 " Debugging maps
 nnoremap <buffer> <silent> <localleader>b :PythonSetBreak<CR>
 
-"###################### R files ################################
+" }}}
+"####################### R files ###########################################{{{
 " fix R indentation
 let r_indent_align_args = 0
 " R-lang set tab width
 autocmd filetype r setlocal tabstop=2 shiftwidth=2
 
-"#################### Python Files ############################
+" }}}
+"####################### Python Files ######################################{{{
 
 function! ToTTY(call, termkey)
 	"echom 'calling "' . a:call . '" in terminal "' . a:termkey . '"'
@@ -154,7 +158,8 @@ endfunction
 			 \:call ToTTY($call, 'i3')<CR>
 
 
-"###################### Javascript #############################
+" }}}
+"####################### Javascript ########################################{{{
 " javascript folding
 augroup javascript_folding
     au!
@@ -167,6 +172,9 @@ let g:javascript_conceal_null                 = "ø"
 "let g:javascript_conceal_underscore_arrow_function = "🞅"
 autocmd FileType javascript setlocal conceallevel=1
 
-
-"####################### JSON ##################################
+" }}}
+"####################### JSON ##############################################{{{
 autocmd FileType json setlocal cole=3
+"}}}
+"####################### vimscript #########################################{{{
+"}}}
