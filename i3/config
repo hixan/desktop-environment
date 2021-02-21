@@ -112,8 +112,8 @@ bindsym $super+Return exec --no-startup-id "$desktop-environment-folder/scripts/
 # start a terminal with the same cwd as the current focused program.
 bindsym $super+Control+Return exec --no-startup-id "$desktop-environment-folder/scripts/terminal_cwd"
 
-# set output tty with to_tty
-bindsym $super+o exec --no-startup-id "$desktop-environment-folder/scripts/to_tty -i i3 -s"
+# set output tty with to-tty (https://github.com/hixan/to_tty)
+bindsym $super+o exec --no-startup-id "to-tty i3 -s"
 
 # open copied link in VLC
 bindsym $super+v exec vlc "$(xsel -bo)"

@@ -126,8 +126,7 @@ function! ToTTY(call, termkey)
 	let prefix = system('git rev-parse --show-prefix')
 
 	" save tty call (with double quote)
-	let ttycall = 'to_tty -i ' . a:termkey . ' -c "'
-	echom ttycall
+	let ttycall = 'to-tty ' . a:termkey . ' -c "'
 	call system('cd ' . root . ';' .
 				\ttycall . "echo -e '\n\n\n\n'" . '";' .
 				\ttycall . a:call . '";' .
