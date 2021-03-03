@@ -121,17 +121,20 @@ autocmd filetype r setlocal tabstop=2 shiftwidth=2
 "####################### Python Files ######################################{{{
 
 function! ToTTY(call, termkey)
-	"echom 'calling "' . a:call . '" in terminal "' . a:termkey . '"'
+	" echom 'calling "' . a:call . '" in terminal "' . a:termkey . '"'
 	" save root of git repo and relative wd
-	let root = system('git rev-parse --show-toplevel')
-	let prefix = system('git rev-parse --show-prefix')
+	" if not in repository, run from current location and save nothing to
+	" prefix.
+	let root = system('git rev-parse --show-toplevel 2>/dev/null || pwd')
+	let prefix = system('git rev-parse --show-prefix 2>/dev/null')
 
 	" save tty call (with double quote)
 	let ttycall = 'to-tty ' . a:termkey . ' -c "'
 	call system('cd ' . root . ';' .
 				\ttycall . "echo -e '\n\n\n\n'" . '";' .
 				\ttycall . a:call . '";' .
-				\'cd "' . prefix . '";')
+				\'cd "' . prefix . '";' .
+				\ttycall . "echo -e '\n\n\n\n'" . '";')
 endfunction
 
 function! SetPythonOptions()
