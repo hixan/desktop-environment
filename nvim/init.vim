@@ -20,6 +20,7 @@ call plug#begin('~/.config/nvim/plugged') " {{{
 Plug 'numirias/semshi', {'do': ':UpdateRemotePlugins'}
 
 " python autocompletion handled by kite
+Plug 'kiteco/vim-plugin'
 
 " Git diffs in margin
 Plug 'airblade/vim-gitgutter'
