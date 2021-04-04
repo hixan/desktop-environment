@@ -39,16 +39,43 @@ Plug 'tpope/vim-surround'
 
 " easy alignment of comments, code, etc
 "Plug 'junegunn/vim-easy-align'
-
 " R-lang in vim!
 "Plug 'jalvesaq/Nvim-R', {'branch': 'stable'}
+
+" git for vim
+Plug 'tpope/vim-fugitive'
+
+" latex in vim
+Plug 'lervag/vimtex'
 call plug#end() " }}}
 
 "####################### ALL ###############################################{{{
 
+" command to send call output to specified tty (termkey)
+function! ToTTY(call, termkey) " {{{
+	echom 'calling "' . a:call . '" in terminal "' . a:termkey . '"'
+	" save root of git repo and relative wd
+	" if not in repository, run from current location and save nothing to
+	" prefix.
+	let root = system('git rev-parse --show-toplevel 2>/dev/null || pwd')
+	let prefix = system('git rev-parse --show-prefix 2>/dev/null')
+
+	" save tty call (with double quote)
+	let ttycall = 'to-tty ' . a:termkey . ' -c "'
+	call system('cd ' . root . ';' .
+		\ttycall . "echo -e '\n\u001b[43mBEGIN OUTPUT\u001b[0m' && " .
+		\a:call . ';' .
+		\"echo -e '\u001b[43mEND OUTPUT\u001b[0m\n';" . '";' .
+		\'cd "' . prefix . '";')
+endfunction " }}}
+
 " better leader
 let mapleader="\<Space>"
 let maplocalleader=","
+
+ " run previous call
+ nnoremap <buffer> <silent> <localleader>p :w<CR>
+			 \:call ToTTY($call, 'i3')<CR>
 
 " centered cursor
 set scrolloff=9999
@@ -56,6 +83,8 @@ set scrolloff=9999
 " wrap on whitespace
 set nolist wrap linebreak breakat&vim
 
+" no highlighting
+nnoremap <buffer> <silent> <localleader>h :noh<CR>
 
 " line numbers
 set rnu
@@ -87,7 +116,7 @@ set completeopt+=noselect  " Don't highlight the first completion automatically
 "####################### Jupyter Notebook ##################################{{{
 " jupytext to open as .py format
 let g:jupytext_fmt = 'py'
-let g:jupytext_to_ipynb_opts = '--to=ipynb --update'
+let g:jupytext_to_ipynb_opts = '--to=ipynb' " --update'
 
 " overwrite default configs
 let g:jupyter_mapkeys = 0
@@ -100,6 +129,12 @@ function! SetJupyterOptions()
 	" Send a selection of lines
 	nmap     <buffer> <silent> <localleader>c <Plug>JupyterRunTextObj
 	vmap     <buffer> <silent> <localleader>c <Plug>JupyterRunVisual
+
+	" send the current statement (approximately)
+	nmap	 <buffer> <silent> <localleader>. :norm mtV%,c<CR><ESC>:norm `t<CR>
+	" send the current block of code
+	nmap	 <buffer> <silent> <localleader>' :norm mtVip,c<CR><ESC> :norm `t<CR>
+
 
 	" clear the output terminal screen
 	nnoremap <buffer> <silent> <localleader>l :norm oprint('\033[2J]')<ESC>:JupyterSendRange<CR>dd
@@ -120,23 +155,9 @@ autocmd filetype r setlocal tabstop=2 shiftwidth=2
 
 " }}}
 "####################### Python Files ######################################{{{
-
-function! ToTTY(call, termkey)
-	" echom 'calling "' . a:call . '" in terminal "' . a:termkey . '"'
-	" save root of git repo and relative wd
-	" if not in repository, run from current location and save nothing to
-	" prefix.
-	let root = system('git rev-parse --show-toplevel 2>/dev/null || pwd')
-	let prefix = system('git rev-parse --show-prefix 2>/dev/null')
-
-	" save tty call (with double quote)
-	let ttycall = 'to-tty ' . a:termkey . ' -c "'
-	call system('cd ' . root . ';' .
-				\ttycall . "echo -e '\n\n\n\n'" . '";' .
-				\ttycall . a:call . '";' .
-				\'cd "' . prefix . '";' .
-				\ttycall . "echo -e '\n\n\n\n'" . '";')
-endfunction
+"
+" TODO send buffer to python command instead of saving file and sending file.
+" This will support running .ipynb files in jupyter mode.
 
 function! SetPythonOptions()
 	" run all python tests
@@ -155,9 +176,6 @@ function! SetPythonOptions()
 				 \:let $call="python " . expand('%:p')<CR>
 				 \:call ToTTY($call, 'i3')<CR>
 
-	 " run previous call
-	 nnoremap <buffer> <silent> <localleader>p :w<CR>
-				 \:call ToTTY($call, 'i3')<CR>
  endfunction
 
 autocmd filetype python call SetPythonOptions()
