@@ -23,7 +23,8 @@ def focus_change_trigger(func):
 
 
 def indicate_focus(window_id):
-    Popen(['i3-msg', '[class="^.*"] border pixel 0; border pixel 2'])
+    # [any window] set no border; focused window border 1
+    Popen(['i3-msg', '[class="^.*"] border pixel 0; border pixel 1'])
     #y = Popen(['xprop', '-id', window_id],stdout=PIPE).stdout.readlines()
     #y = '\n'.join(map(lambda x: x.decode('utf-8').strip(), y))
     #with open('/dev/pts/0', 'w') as f:

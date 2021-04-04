@@ -197,7 +197,29 @@ autocmd FileType javascript setlocal conceallevel=1
 " }}}
 "####################### JSON ##############################################{{{
 autocmd FileType json setlocal cole=3
+autocmd FileType json set foldmethod=syntax
 "}}}
 "####################### vimscript #########################################{{{
 autocmd filetype vim set foldmethod=marker
+"}}}
+"####################### Latex #############################################{{{
+"nmap <localleader>x :echom GetSelection()<CR>
+function! GetSelection()
+	" https://stackoverflow.com/a/1534347
+	try
+		let a_save = @a
+		normal! gv"ay
+		return @a
+	finally
+		let @a = a_save
+	endtry
+endfunction
+
+function! SetLatexOptions()
+	let g:vimtex_view_method='zathura'
+	let g:vimtex_quickfix_mode=0
+	set conceallevel=2
+	let g:tex_conceal='abdmg'
+endfunction
+autocmd filetype tex,latex call SetLatexOptions()
 "}}}

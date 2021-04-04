@@ -4,44 +4,44 @@
 ! nvim xresources; xrdb xresources; urxvt -e sh -c "/home/alexe/.config/desktop-environment/scripts/print_colors; zsh" &
 
 ! special
-*.foreground:   #8a6a53
-!Dark Brown Background#
-*background: #181514
-!Light Brown Background# 
-!*background:   #2c251c
-*cursorColor:  #8a6a53
+*.foreground:   #7c6759
+*.background:   #1b1a19
+*.cursorColor:  #a24f14
 
 ! black
-*color0:       #4c4234
-*color8:       #322a21
+*.color0:       #2c2924
+*.color8:       #88735b
 
 ! red
-*color1:       #94525a
-*color9:       #df6a95
+*.color1:       #77494f
+*.color9:       #e0437d
 
 ! green
-*color2:       #758365
-*color10:      #a6bca4
+*.color2:       #2f4517
+*.color10:      #498b43
 
 ! yellow
-*color3:       #a2bb30
-*color11:      #ceed3b
+*.color3:       #90a339
+*.color11:      #626940
 
 ! blue
-*color4:       #22363b
-*color12:      #4f789f
+*.color4:       #415155
+*.color12:      #2e7d8f
 
 ! magenta
-*color5:       #7d323f
-*color13:      #a74354
+*.color5:       #791728
+*.color13:      #c00525
 
 ! cyan
-*color6:       #20393e
-*color14:      #3e9182
+*.color6:       #171f20
+*.color14:      #0a455b
 
 ! white
-*color7:       #8a6a53
-*color15:      #f0d7c2
+*.color7:       #ac7752
+*.color15:      #dec7b4
+
+! Disable fading
+URxvt.fading: 0
 ! }}}
 
 !! Fonts {{{
