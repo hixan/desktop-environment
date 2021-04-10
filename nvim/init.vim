@@ -100,11 +100,21 @@ nmap <leader>o :only<CR>
 
 " git diffs in modeline
 set updatetime=100
+
+" next git hunk
+nmap <leader>gn <Plug>(GitGutterNextHunk)
+nmap <leader>gp <Plug>(GitGutterPrevHunk)
+nmap <leader>gg <Plug>(GitGutterPreviewHunk)
+nmap <leader>gd <Plug>(GitGutterUndoHunk)
+nmap <leader>gs <Plug>(GitGutterStageHunk)
+let g:gitgutter_preview_win_floating = 0
+
 " git diffs highlight color (same as line number settings)
 hi! link SignColumn LineNr
+
 " change folded color (to be different from comments)
-hi Folded ctermfg=1
-hi Folded ctermbg=4
+hi Folded ctermfg=10
+hi Folded ctermbg=2
 
 " kite settings
 set completeopt+=menuone   " Show the completions UI even with only 1 item
