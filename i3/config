@@ -1,3 +1,4 @@
+# vim: set foldmethod=marker:
 
 # always clear: $super+g (for testing)
 set $super Mod4
@@ -9,11 +10,9 @@ font pango: Noto Sans 10
 # location for scripts
 set $desktop-environment-folder ~/.config/desktop-environment/
 
-##########################
-# Keybindings (Function) #
-########################## {{{
+# Keybindings (Function) # {{{
 
-#change volume
+# change volume
 bindsym XF86AudioRaiseVolume exec pulseaudio-ctl up
 bindsym XF86AudioLowerVolume exec pulseaudio-ctl down
 bindsym XF86AudioMute exec pulseaudio-ctl mute
@@ -27,75 +26,8 @@ bindsym XF86AudioStop exec playerctl stop
 # screenshot
 bindsym Print exec flameshot gui
 
-########################## }}}
-# Autostart              #
-########################## {{{
-
-# TODO disable lightdm all-together? automatically lock on first execution?
-#exec i3lock -i /usr/share/wallpapers/garuda-wallpapers/Garuda\ Desert.png
-
-# lock screen after 10 minutes TODO is this necessary?
-# TODO move locker to script.
-#exec --no-startup-id xautolock -time 10 -locker i3lock -i /usr/share/wallpapers/garuda-wallpapers/Garuda\ Desert.jpg
-
-# adjust monitor profiles
-exec_always --no-startup-id exec autorandr -c
-
-# set keyboard layout with mappings
-# exec_always --no-startup-id exec $desktop-environment-folder/scripts/keyboard_layout
-exec --no-startup-id exec key-mapper-control --command autoload
-
-# enable touchpad gestures
-exec libinput-gestures
-
-# restart picom
-#exec_always --no-startup-id exec $desktop-environment-folder/scripts/restart_picom
-
-# volume tray icon
-exec --no-startup-id pasystray
-
-# set background
-exec --no-startup-id nitrogen --restore; sleep 1; picom -b
-
-# text on background
-exec --no-startup-id conky  # system info
-#exec --no-startup-id conky -c ~/.config/conky/conky-shcts  # keybindings TODO (out of date)
-
-# clipboard manager
-exec --no-startup-id clipman
-
-# notification daemon
-exec --no-startup-id dunst
-
-# night mode display
-#exec --no-startup-id redshift-gtk
-
-# printer management
-#exec --no-startup-id system-config-printer-applet  # manage printers
-#
-# wifi tray icon
-exec --no-startup-id nm-applet
-
-# authentication for programs that need su privelages to run
-exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
-
-exec --no-startup-id xfce4-power-manager
-
-# launch polybar
-#exec_always --no-startup-id ${HOME}/.config/polybar/launch.sh
-
-# turn on numlock
-#exec_always --no-startup-id numlockx on
-
-# set focus indicator and border width (have one of the two lines below commented)
-exec_always --no-startup-id exec $desktop-environment-folder/scripts/focus_indicate
-
-# x resources
-exec_always --no-startup-id xrdb $desktop-environment-folder/xresources
-
-########################## }}}
-# Keybindings (Regular)  #
-########################## {{{
+# }}}
+# Keybindings (Regular)  # {{{
 
 # Use Mouse+$super to drag floating windows to their wanted position
 floating_modifier $super
@@ -115,30 +47,73 @@ bindsym $super+Control+Return exec --no-startup-id "$desktop-environment-folder/
 # set output tty with to-tty (https://github.com/hixan/to_tty)
 bindsym $super+o exec --no-startup-id "to-tty i3 -s"
 
+# Open clipboard item
+
 # open copied link in VLC
 bindsym $super+v exec vlc "$(xsel -bo)"
+
+# open copied link in firefox
+bindsym $super+w exec firefox "$(xsel -bo)"
 
 # start a browser
 bindsym $super+Shift+Return exec firefox
 
 # open file browser
-bindsym $super+Shift+n exec --no-startup-id pcmanfm
-#bindsym $super+Shift+t exec --no-startup-id urxvt -s ranger
+bindsym $super+Shift+n exec --no-startup-id thunar
 
 # open emacs frame
-bindsym $super+b exec --no-startup-id "notify-send -t 5000 'starting emacs'; emacsclient --create-frame --alternate-editor ''"
-# start emacs server
+bindsym $super+b exec --no-startup-id "notify-send -t 3000 'starting emacs'; emacsclient --create-frame --alternate-editor ''"
 
 # open emacs frame to clipboard (floating)
-bindsym $super+c exec --no-startup-id "notify-send -t 5000 'starting emacs clipboard'; $desktop-environment-folder/i3/launch_emacs_edit_clipboard.sh;"
+bindsym $super+c exec --no-startup-id "notify-send -t 3000 'starting emacs clipboard'; $desktop-environment-folder/scripts/launch_emacs_edit_clipboard;"
 
-# math console (using sympy and qtconsole with jupyter-vim)
-#bindsym $super+Shift+m exec --no-startup-id $desktop-environment-folder/scripts/start_matheditor.py
-#bindsym $super+m [class="jupyter-qtconsole"] scratchpad show; [instance="math"] scratchpad show
+# }}}
+# Autostart              # {{{
 
-########################## }}}
-# Misc Functions         #
-########################## {{{
+# adjust monitor profiles
+exec_always --no-startup-id exec autorandr -c
+
+# set keyboard layout with mappings
+exec --no-startup-id exec key-mapper-control --command autoload
+
+# enable touchpad gestures
+exec libinput-gestures
+
+# volume tray icon
+exec --no-startup-id pasystray
+
+# set background
+exec --no-startup-id nitrogen --restore; sleep 1; picom -b
+
+# text on background
+exec --no-startup-id conky  # system info
+
+# clipboard manager
+exec --no-startup-id clipman
+
+# notification daemon
+exec --no-startup-id dunst
+
+# printer management
+#exec --no-startup-id system-config-printer-applet  # manage printers
+
+# wifi tray icon
+exec --no-startup-id nm-applet
+
+# authentication for programs that need su privelages to run
+exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
+
+# power manager icon
+exec --no-startup-id xfce4-power-manager
+
+# set focus indicator and border width
+exec_always --no-startup-id exec $desktop-environment-folder/scripts/focus_indicate
+
+# x resources
+exec_always --no-startup-id xrdb $desktop-environment-folder/xresources
+
+# }}}
+# Misc Functions         # {{{
 
 # show x errors
 bindsym $super+e exec $desktop-environment-folder/scripts/show_x_errors
@@ -189,7 +164,6 @@ bindsym $super+a focus parent
 bindsym $super+d focus child
 
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
-#bindsym $super+Shift+r exec autorandr -c && i3-msg restart
 bindsym $super+Shift+r restart
 
 # switch to workspace
@@ -214,9 +188,8 @@ bindsym $super+Shift+7 move container to workspace $ws7; workspace $ws7
 bindsym $super+Shift+8 move container to workspace $ws8; workspace $ws8
 bindsym $super+Shift+9 move container to workspace $ws9; workspace $ws9
 
-########################## }}}
-# Variables and Colors   #
-########################## {{{
+# }}}
+# Variables and Colors   # {{{
 
 # colour of                  	border 		background, 	text, 		indicator, 	child_border
 client.focused             	#bf616a		#2f343f		#d8dee8		#bf616a		#d8dee8
@@ -248,9 +221,8 @@ gaps outer 5
 # disable borders when only one window
 smart_borders on
 
-########################## }}}
-# Modes                  #
-########################## {{{
+# }}}
+# Modes                  # {{{
 
 # resize window (you can also use the mouse for that)
 mode "resize" {
@@ -345,3 +317,4 @@ bar {
 #        urgent_workspace   $col0 $col0 #E5201D
 #    }
 #}
+# }}}

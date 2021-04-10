@@ -1,9 +1,0 @@
-#!/bin/sh
-
-# keyboard layout
-#                    clear old settings
-#         keyboard layout |    swap control and CL   swap super and alt
-# setxkbmap 'us(dvorak)' -option ctrl:swapcaps -option altwin:swap_alt_win
-
-key-mapper-service > /home/alexe/out.txt && key-mapper-control --command autostart
-#echo "ran keyboard_layout" > FINDME.txt
