@@ -47,6 +47,10 @@ Plug 'tpope/vim-fugitive'
 
 " latex in vim
 Plug 'lervag/vimtex'
+
+" parameter text objects
+Plug 'PeterRincker/vim-argumentative'
+
 call plug#end() " }}}
 
 "####################### ALL ###############################################{{{
