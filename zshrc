@@ -102,16 +102,23 @@ source $ZSH/oh-my-zsh.sh
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
-alias todo_raw="find \"$HOME/Documents\" -not -path '*/\.*' -name todo 2>/dev/null | sed -n 's_\.\?/\(.*\)/\(\([^/]*\)/\([^/]*\)\)/todo_\3 \4 \0_p' | sort -k 2 | head -n 10"
-function todo() {
-	column <(todo_raw | awk -v x='25' '{printf("%-"x"s", $1); print $2}' | awk 'NR==3{print $1}')
+
+function todo_raw() {
+	#dir=$([ $# -eq 0 ] && echo "$HOME/Documents" || echo "$1")
+	find $([ $# -eq 0 ] && echo "$HOME/Documents" || echo "$1") -not -path '*/\.*' -name todo 2>/dev/null | sed -n 's_\(\.\?/\(.*\)/\(\([^/]*\)/\([^/]*\)\)\)/todo_\4 \5 \1_p' | sort -k 2 | head -n 10
 }
+
+function todo() {
+	column <(todo_raw $1 | awk -v x='25' '{printf("%-"x"s", $1); print $2}')
+}
+
 function gotodo() {
 	echo 'select item:'
-	column <(todo_raw | awk -v x='25' '{printf("%-"x"s", $1); print $2}' | nl -v 0 -s') ' -w1)
+	x=$(todo_raw $1)
+	column <(echo $x | awk -v x='25' '{printf("%-"x"s", $1); print $2}' | nl -v 0 -s') ' -w1)
 	echo -n '# '
 	read -sk selection
-	goingto=$(todo_raw | awk -v n=$selection 'NR==n+1{print $3}' | sed 's_/todo__')
+	goingto=$(echo $x | awk -v n=$selection 'NR==n+1{print $3}' | sed 's_/todo__')
 	echo 'changing directory to '"$goingto"
 	cd "$goingto"
 }
