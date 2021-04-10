@@ -73,9 +73,9 @@ endfunction " }}}
 let mapleader="\<Space>"
 let maplocalleader=","
 
- " run previous call
- nnoremap <buffer> <silent> <localleader>p :w<CR>
-			 \:call ToTTY($call, 'i3')<CR>
+" run previous call
+nnoremap <buffer> <silent> <localleader>p :w<CR>
+			\:call ToTTY($call, 'i3')<CR>
 
 " centered cursor
 set scrolloff=9999
@@ -84,7 +84,7 @@ set scrolloff=9999
 set nolist wrap linebreak breakat&vim
 
 " no highlighting
-nnoremap <buffer> <silent> <localleader>h :noh<CR>
+nnoremap <buffer> <silent> <leader>h :noh<CR>
 
 " line numbers
 set rnu
