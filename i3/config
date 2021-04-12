@@ -47,13 +47,14 @@ bindsym $super+Control+Return exec --no-startup-id "$desktop-environment-folder/
 # set output tty with to-tty (https://github.com/hixan/to_tty)
 bindsym $super+o exec --no-startup-id "to-tty i3 -s"
 
-# Open clipboard item
+## Open clipboard item
 
 # open copied link in VLC
 bindsym $super+v exec vlc "$(xsel -bo)"
 
 # open copied link in firefox
-bindsym $super+w exec firefox "$(xsel -bo)"
+bindsym $super+w exec "firefox \"$(xsel -bo)\""
+bindsym $super+Shift+w "firefox --search \"$(xsel -bo)\""
 
 # start a browser
 bindsym $super+Shift+Return exec firefox
