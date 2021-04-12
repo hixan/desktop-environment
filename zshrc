@@ -1,5 +1,6 @@
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
+de="$HOME/.config/desktop-environment"
 
 # Path to your oh-my-zsh installation.
 export ZSH="/home/alexe/.oh-my-zsh"
@@ -123,8 +124,8 @@ function gotodo() {
 	cd "$goingto"
 }
 
-alias see-git-objs='for ref in $(find .git/objects -type f | sed -n "s .git/objects/\(..\)/\(.*\) \1\2 p"); do echo $ref "{{{"; git cat-file -p $ref;echo "}}}"; done | nvim -c ":set fdm=marker"'
-alias colors="/home/alexe/.config/desktop-environment/scripts/print_colors" #"echo \"use with \\\\\\\\u001b[<code>m\"; for i in {40..47}; do echo -en \"\\u001b[0m\\n\\n\"; for j in {30..37}; do echo -n \"\\u001b[\$i\"m\"\\u001b[\$j\"mT:\$j B:\$i\"\\u001b[0m  \"; done; done; echo"
+# alias see-git-objs='for ref in $(find .git/objects -type f | sed -n "s .git/objects/\(..\)/\(.*\) \1\2 p"); do echo $ref "{{{"; git cat-file -p $ref;echo "}}}"; done | nvim -c ":set fdm=marker"'
+alias colors="$de/scripts/print_colors"
 alias jsonv="nvim -c 'set filetype=json'"
 function emg {
 	[ -f $1 ] || touch $1
@@ -133,12 +134,13 @@ function emg {
 }
 function jnvim {
 	[ -f $1 ] || touch $1
-	# if no jupyter-qtconsole instances exist, spawn one.
-	if [[ $(ps -C jupyter-qtconsole | wc -l) -lt 2 ]]; then
-		jupyter-qtconsole --no-confirm-exit > /dev/null 2>&1 &
+	# if no jupyter-lab instances exist, spawn one.
+	if [[ $(ps -C jupyter-lab | wc -l) -lt 2 ]]; then
+		jupyter lab --browser "$de/scripts/jupyterlab-console %s" > /dev/null 2>&1 &
 		disown
+		echo 'waiting for jupyter-lab...'
+		sleep 10
 	fi
-	sleep 1
 	nvim $1 -c "silent JupyterConnect"
 }
 function magit {

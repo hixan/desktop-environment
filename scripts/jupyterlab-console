@@ -1,0 +1,8 @@
+#!/bin/bash
+
+port_token=($(cat $(echo $1 | cut -c 8-) | sed -n 's .*url=\(https\?\)://localhost:\([0-9]\+\)/lab?token=\([a-f0-9]*\).* \1\ \2\ \3 p'))
+schema=${port_token[0]}
+port=${port_token[1]}
+token=${port_token[2]}
+
+firefox "$schema://localhost:$port/lab/workspaces/console?token=$token"
