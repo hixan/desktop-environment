@@ -53,8 +53,8 @@ bindsym $super+o exec --no-startup-id "to-tty i3 -s"
 bindsym $super+v exec vlc "$(xsel -bo)"
 
 # open copied link in firefox
-bindsym $super+w exec "firefox \"$(xsel -bo)\""
-bindsym $super+Shift+w "firefox --search \"$(xsel -bo)\""
+bindsym $super+w exec firefox --new-tab "$(xsel -bo)"
+bindsym $super+Shift+w exec firefox --search "$(xsel -bo)" && sleep .5 && i3-msg "floating enable"
 
 # start a browser
 bindsym $super+Shift+Return exec firefox
