@@ -28,6 +28,9 @@ Plug 'airblade/vim-gitgutter'
 " python folding
 Plug 'tmhedberg/SimpylFold'
 
+" python pep-8 indentation
+Plug 'Vimjas/vim-python-pep8-indent'
+
 " jupyter qtconsole integration
 Plug 'jupyter-vim/jupyter-vim'
 
