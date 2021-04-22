@@ -54,9 +54,15 @@ Plug 'lervag/vimtex'
 " parameter text objects
 Plug 'PeterRincker/vim-argumentative'
 
+" bracked highlighting
+Plug 'frazrepo/vim-rainbow'
+
 call plug#end() " }}}
 
 "####################### ALL ###############################################{{{
+
+" rainbow brackets
+let g:rainbow_active = 1
 
 " command to send call output to specified tty (termkey)
 function! ToTTY(call, termkey) " {{{
@@ -179,7 +185,7 @@ autocmd filetype r setlocal tabstop=2 shiftwidth=2
 function! SetPythonOptions()
 	" run all python tests
 	 nnoremap <buffer> <silent> <localleader>t :w<CR>
-				 \:let $call = 'pytest -v'<CR>
+				 \:let $call = 'pytest -v --doctest-modules'<CR>
 				 \:silent call ToTTY($call, 'i3')<CR>
 
 	 " run current function
@@ -192,6 +198,9 @@ function! SetPythonOptions()
 	 nnoremap <buffer> <silent> <localleader>r :w<CR>
 				 \:let $call="python " . expand('%:p')<CR>
 				 \:call ToTTY($call, 'i3')<CR>
+	
+	 " highlight 80 column limit
+	 set colorcolumn=79
 
  endfunction
 
