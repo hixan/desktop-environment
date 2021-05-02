@@ -41,7 +41,7 @@ Plug 'goerz/jupytext.vim'
 Plug 'tpope/vim-surround'
 
 " easy alignment of comments, code, etc
-"Plug 'junegunn/vim-easy-align'
+Plug 'junegunn/vim-easy-align'
 " R-lang in vim!
 "Plug 'jalvesaq/Nvim-R', {'branch': 'stable'}
 
@@ -87,7 +87,7 @@ let mapleader="\<Space>"
 let maplocalleader=","
 
 " run previous call
-nnoremap <buffer> <silent> <localleader>p :w<CR>
+nnoremap <silent> <localleader>p :w<CR>
 			\:call ToTTY($call, 'i3')<CR>
 
 " centered cursor
@@ -128,6 +128,9 @@ hi! link SignColumn LineNr
 " change folded color (to be different from comments)
 hi Folded ctermfg=10
 hi Folded ctermbg=2
+
+" easy align
+xmap <leader>a <Plug>(EasyAlign)
 
 " kite settings
 set completeopt+=menuone   " Show the completions UI even with only 1 item
@@ -185,13 +188,13 @@ autocmd filetype r setlocal tabstop=2 shiftwidth=2
 function! SetPythonOptions()
 	" run all python tests
 	 nnoremap <buffer> <silent> <localleader>t :w<CR>
-				 \:let $call = 'pytest -v --doctest-modules'<CR>
+				 \:let $call = 'pytest -v --doctest-modules --disable-warnings'<CR>
 				 \:silent call ToTTY($call, 'i3')<CR>
 
 	 " run current function
 	 nnoremap <buffer> <silent> <localleader>T :w<CR>
 				 \:silent 0,s/^def\W\+\(\w\+\)/\=setreg('q', submatch(1))/n<CR>
-				 \:let $call="pytest -v " . $prefix . expand('%') . "::" . @q<CR>
+				 \:let $call="pytest -v --disable-warnings " . $prefix . expand('%') . "::" . @q<CR>
 				 \:call ToTTY($call, 'i3')<CR>
 
 	 " run python file
@@ -199,6 +202,13 @@ function! SetPythonOptions()
 				 \:let $call="python " . expand('%:p')<CR>
 				 \:call ToTTY($call, 'i3')<CR>
 	
+
+	 " run type checking
+	 nnoremap <buffer> <silent> <localleader>m :w<CR>
+				 \:let $call="mypy --ignore-missing-imports --follow-imports=normal "
+				 \ . expand('%:p')<CR>
+				 \:call ToTTY($call, 'i3')<CR>
+
 	 " highlight 80 column limit
 	 set colorcolumn=79
 
