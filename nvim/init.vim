@@ -188,26 +188,49 @@ autocmd filetype r setlocal tabstop=2 shiftwidth=2
 function! SetPythonOptions()
 	" run all python tests
 	 nnoremap <buffer> <silent> <localleader>t :w<CR>
-				 \:let $call = 'pytest -v --doctest-modules --disable-warnings'<CR>
-				 \:silent call ToTTY($call, 'i3')<CR>
+				 \:let call = 'pytest -v --doctest-modules --disable-warnings'<CR>
+				 \:silent call ToTTY(call, 'i3')<CR>
 
 	 " run current function
 	 nnoremap <buffer> <silent> <localleader>T :w<CR>
 				 \:silent 0,s/^def\W\+\(\w\+\)/\=setreg('q', submatch(1))/n<CR>
-				 \:let $call="pytest -v --disable-warnings " . $prefix . expand('%') . "::" . @q<CR>
-				 \:call ToTTY($call, 'i3')<CR>
+				 \:let call="pytest -v --disable-warnings " . $prefix . expand('%') . "::" . @q<CR>
+				 \:silent call ToTTY(call, 'i3')<CR>
 
 	 " run python file
 	 nnoremap <buffer> <silent> <localleader>r :w<CR>
-				 \:let $call="python " . expand('%:p')<CR>
-				 \:call ToTTY($call, 'i3')<CR>
+				 \:let call="python " . expand('%:p')<CR>
+				 \:silent call ToTTY(call, 'i3')<CR>
 	
 
 	 " run type checking
 	 nnoremap <buffer> <silent> <localleader>m :w<CR>
+				 \:let call="mypy --ignore-missing-imports --follow-imports=normal "
+				 \ . expand('%:p')<CR>
+				 \:silent call ToTTY(call, 'i3')<CR>
+
+	" run all python tests and set previous call to do so
+	 nnoremap <buffer> <silent> <localleader>gt :w<CR>
+				 \:let $call = 'pytest -v --doctest-modules --disable-warnings'<CR>
+				 \:silent call ToTTY($call, 'i3')<CR>
+
+	 " run current function and set previous call to do so
+	 nnoremap <buffer> <silent> <localleader>gT :w<CR>
+				 \:silent 0,s/^def\W\+\(\w\+\)/\=setreg('q', submatch(1))/n<CR>
+				 \:let $call="pytest -v --disable-warnings " . $prefix . expand('%') . "::" . @q<CR>
+				 \:silent call ToTTY($call, 'i3')<CR>
+
+	 " run python file and set previous call to do so
+	 nnoremap <buffer> <silent> <localleader>gr :w<CR>
+				 \:let $call="python " . expand('%:p')<CR>
+				 \:silent call ToTTY($call, 'i3')<CR>
+	
+
+	 " run type checking and set previous call to do so
+	 nnoremap <buffer> <silent> <localleader>gm :w<CR>
 				 \:let $call="mypy --ignore-missing-imports --follow-imports=normal "
 				 \ . expand('%:p')<CR>
-				 \:call ToTTY($call, 'i3')<CR>
+				 \:silent call ToTTY($call, 'i3')<CR>
 
 	 " highlight 80 column limit
 	 set colorcolumn=79
