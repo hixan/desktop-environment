@@ -7,8 +7,8 @@ set statusline+=%f
 set statusline+=\%m
 set statusline+=\ %y
 set statusline+=\ pos:\ %l,%c
-"set statusline+=\ %{coc#status()}
-set statusline+=\ %{kite#statusline()}
+set statusline+=\ %{coc#status()}
+"set statusline+=\ %{kite#statusline()}
 set statusline+=%=  " switch to the right side
 set statusline+=\ lines:\ %L
 set statusline+=\ b:\ %n
@@ -17,16 +17,18 @@ set statusline+=\ b:\ %n
 call plug#begin('~/.config/nvim/plugged') " {{{
 
 " python syntax highlighting
-Plug 'numirias/semshi', {'do': ':UpdateRemotePlugins'}
+"Plug 'numirias/semshi', {'do': ':UpdateRemotePlugins'}
 
 " python autocompletion handled by kite
-Plug 'kiteco/vim-plugin'
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
 " Git diffs in margin
 Plug 'airblade/vim-gitgutter'
 
 " python folding
-Plug 'tmhedberg/SimpylFold'
+"Plug 'tmhedberg/SimpylFold'
+Plug 'nvim-treesitter/nvim-treesitter'
+Plug 'nvim-treesitter/playground'
 
 " python pep-8 indentation
 Plug 'Vimjas/vim-python-pep8-indent'
@@ -145,12 +147,10 @@ hi Folded ctermbg=2
 " easy align
 xmap <leader>a <Plug>(EasyAlign)
 
-" kite settings
-set completeopt+=menuone   " Show the completions UI even with only 1 item
-set completeopt-=preview   " Show the documentation preview window
-set completeopt+=longest   " Insert the longest common text
-set completeopt-=noinsert  " Don't insert text automatically
-set completeopt+=noselect  " Don't highlight the first completion automatically
+" tab navigation
+nmap <leader>tn :tabNext<CR>
+nmap <leader>tp :tabprevious<CR>
+
 " }}}
 "####################### Jupyter Notebook ##################################{{{
 " jupytext to open as .py format
@@ -246,7 +246,15 @@ function! SetPythonOptions()
 				 \:silent call ToTTY($call, 'i3')<CR>
 
 	 " highlight 80 column limit
-	 set colorcolumn=79
+	 setlocal colorcolumn=79
+
+	 " folding from TreeSitter
+	 setlocal foldmethod=expr
+	 setlocal foldexpr=nvim_treesitter#foldexpr()
+	 " my folding function to handle decorators
+	 setlocal foldtext=PythonFoldText()
+	 " reset folding
+	 nnoremap <buffer> <silent> <localleader>x :w<CR>:e<CR>
 
  endfunction
 
