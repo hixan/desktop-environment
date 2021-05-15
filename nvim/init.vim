@@ -57,9 +57,22 @@ Plug 'PeterRincker/vim-argumentative'
 " bracked highlighting
 Plug 'frazrepo/vim-rainbow'
 
+" gruvbox colorscheme
+Plug 'lifepillar/vim-gruvbox8'
+
+" nvim in firefox
+Plug 'glacambre/firenvim', {'do': {_ -> firenvim#install(0)}}
+
 call plug#end() " }}}
 
 "####################### ALL ###############################################{{{
+
+" reload vimrc
+nnoremap <silent> <leader>r :so $MYVIMRC<CR>
+
+" gruvbox colorscheme
+colorscheme gruvbox8
+set background=dark
 
 " rainbow brackets
 let g:rainbow_active = 1
