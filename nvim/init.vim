@@ -91,7 +91,8 @@ function! ToTTY(call, termkey) " {{{
 	" save tty call (with double quote)
 	let ttycall = 'to-tty ' . a:termkey . ' -c "'
 	call system('cd ' . root . ';' .
-		\ttycall . "echo -e '\n\u001b[43mBEGIN OUTPUT\u001b[0m' && " .
+		\ttycall . "echo -en '\n\u001b[43mBEGIN OUTPUT\u001b[0m' && " .
+		\"echo -e '  \u001b[32;1m" . a:call . "\u001b[0m' && " .
 		\a:call . ';' .
 		\"echo -e '\u001b[43mEND OUTPUT\u001b[0m\n';" . '";' .
 		\'cd "' . prefix . '";')
@@ -103,7 +104,7 @@ let maplocalleader=","
 
 " run previous call
 nnoremap <silent> <localleader>p :w<CR>
-			\:call ToTTY($call, 'i3')<CR>
+			\:silent call ToTTY($call, 'i3')<CR>
 
 " centered cursor
 set scrolloff=9999
@@ -112,7 +113,7 @@ set scrolloff=9999
 set nolist wrap linebreak breakat&vim
 
 " no highlighting
-nnoremap <buffer> <silent> <leader>h :noh<CR>
+nnoremap <silent> <leader>h :noh<CR>
 
 " line numbers
 set rnu
