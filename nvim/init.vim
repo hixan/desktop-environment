@@ -259,51 +259,57 @@ function! PythonFoldText() " {{{
 endfunction " }}}
 
 function! SetPythonOptions() " {{{
+	" without setting $call
 	" run all python tests
-	 nnoremap <buffer> <silent> <localleader>t :w<CR>
-				 \:let call = 'pytest -v --doctest-modules --disable-warnings'<CR>
-				 \:silent call ToTTY(call, 'i3')<CR>
+	nnoremap <buffer> <silent> <localleader>t :w<CR>
+		\:let call = 'pytest -v --doctest-modules --disable-warnings'<CR>
+		\:silent call ToTTY(call, 'i3')<CR>
 
-	 " run current function
-	 nnoremap <buffer> <silent> <localleader>T :w<CR>
-				 \:silent 0,s/^def\W\+\(\w\+\)/\=setreg('q', submatch(1))/n<CR>
-				 \:let call="pytest -v --disable-warnings " . $prefix . expand('%') . "::" . @q<CR>
-				 \:silent call ToTTY(call, 'i3')<CR>
+	" run current function
+	nnoremap <buffer> <silent> <localleader>T :w<CR>
+		\:silent 0,s/^def\W\+\(\w\+\)/\=setreg('q', submatch(1))/n<CR>
+		\:let call="pytest -v --disable-warnings " . $prefix
+		\. expand('%') . "::" . @q<CR>
+		\:silent call ToTTY(call, 'i3')<CR>
 
-	 " run python file
-	 nnoremap <buffer> <silent> <localleader>r :w<CR>
-				 \:let call="python " . expand('%:p')<CR>
-				 \:silent call ToTTY(call, 'i3')<CR>
+	" run python file
+	nnoremap <buffer> <silent> <localleader>r :w<CR>
+		\:let call="python " . expand('%:p')<CR>
+		\:silent call ToTTY(call, 'i3')<CR>
 	
 
-	 " run type checking
-	 nnoremap <buffer> <silent> <localleader>m :w<CR>
-				 \:let call="mypy --ignore-missing-imports --follow-imports=normal "
-				 \ . expand('%:p')<CR>
-				 \:silent call ToTTY(call, 'i3')<CR>
+	" run type checking
+	nnoremap <buffer> <silent> <localleader>m :w<CR>
+		\:let call="mypy --ignore-missing-imports --follow-imports=normal "
+		\ . expand('%:p')<CR>
+		\:silent call ToTTY(call, 'i3')<CR>
 
+	" with setting $call 
 	" run all python tests and set previous call to do so
-	 nnoremap <buffer> <silent> <localleader>gt :w<CR>
-				 \:let $call = 'pytest -v --doctest-modules --disable-warnings'<CR>
-				 \:silent call ToTTY($call, 'i3')<CR>
+	nnoremap <buffer> <silent> <localleader>gt :w<CR>
+		\:norm ,t
+		\:let $call = call<CR>
+		\:silent call ToTTY($call, 'i3')<CR>
 
-	 " run current function and set previous call to do so
-	 nnoremap <buffer> <silent> <localleader>gT :w<CR>
-				 \:silent 0,s/^def\W\+\(\w\+\)/\=setreg('q', submatch(1))/n<CR>
-				 \:let $call="pytest -v --disable-warnings " . $prefix . expand('%') . "::" . @q<CR>
-				 \:silent call ToTTY($call, 'i3')<CR>
+	" run current function and set previous call to do so
+	nnoremap <buffer> <silent> <localleader>gT :w<CR>
+		\:norm ,T
+		\:let $call = call<CR>
+		\:silent call ToTTY($call, 'i3')<CR>
 
-	 " run python file and set previous call to do so
-	 nnoremap <buffer> <silent> <localleader>gr :w<CR>
-				 \:let $call="python " . expand('%:p')<CR>
-				 \:silent call ToTTY($call, 'i3')<CR>
+	" run python file and set previous call to do so
+	nnoremap <buffer> <silent> <localleader>gr :w<CR>
+		\:norm ,r
+		\:let $call = call<CR>
+		\:silent call ToTTY($call, 'i3')<CR>
 	
 
-	 " run type checking and set previous call to do so
-	 nnoremap <buffer> <silent> <localleader>gm :w<CR>
-				 \:let $call="mypy --ignore-missing-imports --follow-imports=normal "
-				 \ . expand('%:p')<CR>
-				 \:silent call ToTTY($call, 'i3')<CR>
+	" run type checking and set previous call to do so
+	nnoremap <buffer> <silent> <localleader>gm :w<CR>
+		\:norm ,m
+		\:let $call=call<CR>
+		\ . expand('%:p')<CR>
+		\:silent call ToTTY($call, 'i3')<CR>
 
 	 " highlight 80 column limit
 	 setlocal colorcolumn=80
