@@ -199,7 +199,7 @@ autocmd filetype r setlocal tabstop=2 shiftwidth=2
 " TODO send buffer to python command instead of saving file and sending file.
 " This will support running .ipynb files in jupyter mode.
 
-function! PythonFoldText()
+function! PythonFoldText() " {{{
 
 	let COLUMNWIDTH=80
 
@@ -256,9 +256,9 @@ function! PythonFoldText()
 	let lline = len(line)
 	return prefix . line . repeat(' ', COLUMNWIDTH - lpref - lline - lsuff) . suffix
 
-endfunction
+endfunction " }}}
 
-function! SetPythonOptions()
+function! SetPythonOptions() " {{{
 	" run all python tests
 	 nnoremap <buffer> <silent> <localleader>t :w<CR>
 				 \:let call = 'pytest -v --doctest-modules --disable-warnings'<CR>
@@ -306,7 +306,7 @@ function! SetPythonOptions()
 				 \:silent call ToTTY($call, 'i3')<CR>
 
 	 " highlight 80 column limit
-	 setlocal colorcolumn=79
+	 setlocal colorcolumn=80
 
 	 " folding from TreeSitter
 	 setlocal foldmethod=expr
@@ -316,7 +316,7 @@ function! SetPythonOptions()
 	 " reset folding
 	 nnoremap <buffer> <silent> <localleader>x :w<CR>:e<CR>
 
- endfunction
+ endfunction " }}}
 
 autocmd filetype python call SetPythonOptions()
 
