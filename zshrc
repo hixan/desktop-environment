@@ -14,6 +14,9 @@ ZSH_THEME="robbyrussell"
 if [ -d "$HOME/.local/bin" ]; then
 	export PATH=$HOME/.local/bin:$PATH
 fi
+if [ -d "$HOME/.cargo/bin" ]; then
+	export PATH=$HOME/.cargo/bin:$PATH
+fi
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
 # a theme from this variable instead of looking in $ZSH/themes/
