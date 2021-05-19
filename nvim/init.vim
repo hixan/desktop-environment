@@ -201,39 +201,58 @@ autocmd filetype r setlocal tabstop=2 shiftwidth=2
 
 function! PythonFoldText()
 
-	let COLUMNWIDTH=79
-
+	let COLUMNWIDTH=80
 
 	let fs = v:foldstart
 
 	" set rv to all decorators (without '@') and line to the first level
 	" that is not a decorator.
-	let line = substitute(getline(fs), '^\s*\(.*\)\s*$', '\1', '')
+	let line = getline(fs)
 	let rv = ''
-	while line[0] == "@"
+	while substitute(line, '^\s*\(.*\)\s*$', '\1', '')[0] == "@"
 		" flag for custom return value
-		let rv .= ' ' . line[1:]
+		let rv .= ' ' . substitute(line, '^\s*@\(.*\)\>.*$', '\1', '')
 		let fs += 1
-		let line = substitute(getline(fs), '^\s*\(.*\)\s*$', '\1', '')
+		let line = getline(fs)
 	endwhile
 
 	" check for try/catch blocks
-	if line[:4] == 'try:'
+	if substitute(line, getline(fs), '^\s*\(.*\)\s*$', '\1', '')[:4] == 'try:'
 		let fs += 1
-		let line = 'try: ' . substitute(getline(fs), '^\s*\(.*\)\s*$', '\1', '')
+		let line = substitute(line, getline(fs), '^\(\s*.*\)\s*$', '\1', '') . substitute(getline(fs), '^\s*\(.*\)\s*$', '\1', '')
 	end
 
 	" add number of flded lines
 	let lnum =  printf('%d', v:foldend - v:foldstart + 1)
 
-	" remove leading whitespace and quote comments
-	let line = substitute(line, '^[\s"'."'".']*\(.*\)\s*$', '\1', '')
+	" remove quote comments
+	let line = substitute(line, "['".'"]\{3\}', '', '')
 
-	let prefix = repeat('╳', v:foldlevel) . ' '
+	let prefix = ''
 	let suffix = rv . ' ' . lnum
 	let lpref = len(prefix)
 	let lsuff = len(suffix)
-	let line = line[:COLUMNWIDTH - lpref - lsuff + 3]
+	let mlinel = min([COLUMNWIDTH - lpref - lsuff - len(lnum), 60])
+	" add next lines until too long
+	while len(line) < mlinel && fs < v:foldend
+		let fs += 1
+		let toadd = substitute(getline(fs), '^\s*\(.*\)\s*$', '\1', '')
+		if toadd != ''
+			let last = line[len(line)-1]
+			if last == ':' || last == ',' 
+				let line .= ' ' . toadd
+				continue
+			end
+			if last == '[' || last == '(' || last == '{'
+				let line .= toadd
+				continue
+			else
+				let line .= '; ' . toadd
+				continue
+			end
+		end
+	endwhile
+	let line = line[:mlinel]
 	let lline = len(line)
 	return prefix . line . repeat(' ', COLUMNWIDTH - lpref - lline - lsuff) . suffix
 
