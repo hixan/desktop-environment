@@ -128,12 +128,12 @@ function gotodo() {
 }
 
 # alias see-git-objs='for ref in $(find .git/objects -type f | sed -n "s .git/objects/\(..\)/\(.*\) \1\2 p"); do echo $ref "{{{"; git cat-file -p $ref;echo "}}}"; done | nvim -c ":set fdm=marker"'
+alias vim="swallow neovide --multiGrid"
 alias colors="$de/scripts/print_colors"
-alias jsonv="nvim -c 'set filetype=json'"
+alias opdf="swallow okular"
 function emg {
 	[ -f $1 ] || touch $1
-	emacsclient -c --alternate-editor '' $1 &
-	disown
+	swallow emacsclient -c --alternate-editor '' $1
 }
 function jnvim {
 	[ -f $1 ] || touch $1
@@ -146,15 +146,14 @@ function jnvim {
 	fi
 	nvim $1 -c "silent JupyterConnect"
 }
-function magit {
-	# make a parent container
-	i3-msg "split toggle" > /dev/null
-	# make tabbed mode
-	i3-msg "layout tabbed" > /dev/null
-	# launch emacs (now hides terminal that called it)
-	git rev-parse --is-inside-work-tree && emacsclient -e '(progn (magit-status) (delete-other-windows))' -c
-	# after exits, move left to remove the parent container
-	i3-msg "move left" > /dev/null
+alias magit='git rev-parse --is-inside-work-tree && swallow emacsclient -e "(progn (magit-status) (delete-other-windows))" -c'
+function csvplot {
+	if [[ $# -eq 1 ]]; then
+		title="$1"
+	else
+		title="$2"
+	fi
+	python -c "import pandas as pd, sys, matplotlib.pyplot as plt; pd.read_csv(\"$1\").plot(); plt.title(\"$title\"); plt.show()"
 }
 # sudoeditor to use neovim
 export SUDO_EDITOR=/usr/bin/nvim
