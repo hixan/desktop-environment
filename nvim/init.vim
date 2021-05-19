@@ -69,6 +69,10 @@ call plug#end() " }}}
 
 "####################### ALL ###############################################{{{
 
+" better leader
+let mapleader="\<Space>"
+let maplocalleader=","
+
 " reload vimrc
 nnoremap <silent> <leader>r :so $MYVIMRC<CR>
 
@@ -97,10 +101,6 @@ function! ToTTY(call, termkey) " {{{
 		\"echo -e '\u001b[43mEND OUTPUT\u001b[0m\n';" . '";' .
 		\'cd "' . prefix . '";')
 endfunction " }}}
-
-" better leader
-let mapleader="\<Space>"
-let maplocalleader=","
 
 " run previous call
 nnoremap <silent> <localleader>p :w<CR>
@@ -139,7 +139,7 @@ nmap <leader>gs <Plug>(GitGutterStageHunk)
 let g:gitgutter_preview_win_floating = 0
 
 " git diffs highlight color (same as line number settings)
-hi! link SignColumn LineNr
+"hi! link SignColumn LineNr
 
 " change folded color (to be different from comments)
 hi Folded ctermfg=10
@@ -198,6 +198,46 @@ autocmd filetype r setlocal tabstop=2 shiftwidth=2
 "
 " TODO send buffer to python command instead of saving file and sending file.
 " This will support running .ipynb files in jupyter mode.
+
+function! PythonFoldText()
+
+	let COLUMNWIDTH=79
+
+
+	let fs = v:foldstart
+
+	" set rv to all decorators (without '@') and line to the first level
+	" that is not a decorator.
+	let line = substitute(getline(fs), '^\s*\(.*\)\s*$', '\1', '')
+	let rv = ''
+	while line[0] == "@"
+		" flag for custom return value
+		let rv .= ' ' . line[1:]
+		let fs += 1
+		let line = substitute(getline(fs), '^\s*\(.*\)\s*$', '\1', '')
+	endwhile
+
+	" check for try/catch blocks
+	if line[:4] == 'try:'
+		let fs += 1
+		let line = 'try: ' . substitute(getline(fs), '^\s*\(.*\)\s*$', '\1', '')
+	end
+
+	" add number of flded lines
+	let lnum =  printf('%d', v:foldend - v:foldstart + 1)
+
+	" remove leading whitespace and quote comments
+	let line = substitute(line, '^[\s"'."'".']*\(.*\)\s*$', '\1', '')
+
+	let prefix = repeat('╳', v:foldlevel) . ' '
+	let suffix = rv . ' ' . lnum
+	let lpref = len(prefix)
+	let lsuff = len(suffix)
+	let line = line[:COLUMNWIDTH - lpref - lsuff + 3]
+	let lline = len(line)
+	return prefix . line . repeat(' ', COLUMNWIDTH - lpref - lline - lsuff) . suffix
+
+endfunction
 
 function! SetPythonOptions()
 	" run all python tests
