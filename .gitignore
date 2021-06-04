@@ -3,3 +3,4 @@ nvim/.netrwhist
 meta/**
 **/__pycache__/**
 nvim/pack/**
+private/**
