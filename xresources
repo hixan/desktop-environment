@@ -4,51 +4,55 @@
 ! nvim xresources; xrdb xresources; urxvt -e sh -c "/home/alexe/.config/desktop-environment/scripts/print_colors; zsh" &
 
 ! special
-*.foreground:   #7c6759
-*.background:   #1b1a19
-*.cursorColor:  #a24f14
+*.foreground:   #c4c4c4
+*.background:   #191919
+*.cursorColor:  #661133
 
 ! black
-*.color0:       #2c2924
-*.color8:       #88735b
+*.color0:       #555555
+*.color8:       #a6a6a6
 
 ! red
-*.color1:       #77494f
-*.color9:       #e0437d
+*.color1:       #9c3528
+*.color9:       #e74f3b
 
 ! green
-*.color2:       #2f4517
-*.color10:      #498b43
+*.color2:       #274b18
+*.color10:      #6cb44b
 
 ! yellow
-*.color3:       #90a339
-*.color11:      #626940
+*.color3:       #915323
+*.color11:      #e09155
 
 ! blue
-*.color4:       #415155
-*.color12:      #2e7d8f
+*.color4:       #094b79
+*.color12:      #0f75bd
 
 ! magenta
-*.color5:       #791728
-*.color13:      #c00525
+*.color5:       #744560
+*.color13:      #ca78a8
 
 ! cyan
-*.color6:       #171f20
-*.color14:      #0a455b
+*.color6:       #227985
+*.color14:      #38c8dc
 
 ! white
-*.color7:       #ac7752
-*.color15:      #dec7b4
+*.color7:       #757575
+*.color15:      #bebebe
 
 ! Disable fading
 URxvt.fading: 0
 ! }}}
 
 !! Fonts {{{
-URxvt.font: xft:Source Code Pro:style=Regular:size=12,xft:MesloLGS NF:style=Medium:size=12
-URxvt.boldFont: xft:Source Code Pro:style=Bold:size=12,xft:MesloLGS NF:style=Medium:size=12
-URxvt.italicFont: xft:Source Code Pro:style=Italic:size=12,xft:MesloLGS NF:style=Medium:size=12
-URxvt.boldItalicFont: xft:Source Code Pro:style=Bold Italic:size=12,xft:MesloLGS NF:style=Medium:size=12
+URxvt.font: xft:Source Code Pro:style=Regular:size=9,\
+	xft:MesloLGS NF:style=Medium:size=9
+URxvt.boldFont: xft:Source Code Pro:style=Bold:size=10,\
+	xft:MesloLGS NF:style=Medium:size=9
+URxvt.italicFont: xft:Source Code Pro:style=Italic:size=8,\
+	xft:MesloLGS NF:style=Medium:size=9
+URxvt.boldItalicFont: xft:Source Code Pro:style=Bold Italic:size=9,\
+	xft:MesloLGS NF:style=Medium:size=9
 URxvt.letterSpace: -1
 URxvt.lineSpace: 0
 URxvt.geometry: 92x24
@@ -63,6 +67,8 @@ URxvt.depth: 24
 URxvt.iso14755: false
 
 ! }}}
+
+Xft.dpi: 96
 
 !! Keybindings {{{
 URxvt.keysym.Shift-Control-C: eval:selection_to_clipboard
