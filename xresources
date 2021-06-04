@@ -1,7 +1,8 @@
-!! Colors {{{
-
+! vim: foldmethod=marker
 ! for testing colors:
-! nvim xresources; xrdb xresources; urxvt -e sh -c "/home/alexe/.config/desktop-environment/scripts/print_colors; zsh" &
+! vim xresources; xrdb xresources; urxvt -e sh -c "/home/alexe/.config/desktop-environment/scripts/print_colors; zsh" &
+
+!! Colors {{{
 
 ! special
 *.foreground:   #c4c4c4
@@ -74,3 +75,8 @@ Xft.dpi: 96
 URxvt.keysym.Shift-Control-C: eval:selection_to_clipboard
 URxvt.keysym.Shift-Control-V: eval:paste_clipboard
 ! }}}
+
+!! Others {{{
+urxvt*depth: 32
+urxvt*background: rgba:1900/1900/1900/9999
+!! }}}
