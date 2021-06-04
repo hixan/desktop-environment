@@ -377,3 +377,19 @@ function! SetLatexOptions()
 endfunction
 autocmd filetype tex,latex call SetLatexOptions()
 "}}}
+"####################### FireNvim ##########################################{{{
+let g:firenvim_config = { 
+    \ 'globalSettings': {
+        \ 'alt': 'all',
+    \  },
+    \ 'localSettings': {
+        \ '.*': {
+            \ 'cmdline': 'neovim',
+            \ 'content': 'text',
+            \ 'priority': 0,
+            \ 'selector': 'textarea',
+            \ 'takeover': 'never',
+        \ },
+    \ }
+\ }
+"}}}

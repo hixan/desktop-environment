@@ -135,7 +135,7 @@ function emg {
 	[ -f $1 ] || touch $1
 	swallow emacsclient -c --alternate-editor '' $1
 }
-function jnvim {
+function jvim {
 	[ -f $1 ] || touch $1
 	# if no jupyter-lab instances exist, spawn one.
 	if [[ $(ps -C jupyter-lab | wc -l) -lt 2 ]]; then
@@ -144,7 +144,7 @@ function jnvim {
 		echo 'waiting for jupyter-lab...'
 		sleep 10
 	fi
-	nvim $1 -c "silent JupyterConnect"
+	vim $1 -c "silent JupyterConnect"
 }
 alias magit='git rev-parse --is-inside-work-tree && swallow emacsclient -e "(progn (magit-status) (delete-other-windows))" -c'
 function csvplot {
