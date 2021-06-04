@@ -83,8 +83,11 @@ exec libinput-gestures
 # volume tray icon
 exec --no-startup-id pasystray
 
+# start picom (composition manager)
+exec --no-startup-id picom -b --config $desktop-environment-folder/picom/picom.conf
+
 # set background
-exec --no-startup-id nitrogen --restore; sleep 1; picom -b --config $desktop-environment-folder/picom/picom.conf
+exec_always --no-startup-id nitrogen --restore
 
 # text on background
 exec --no-startup-id conky  # system info
