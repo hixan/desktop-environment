@@ -47,13 +47,17 @@ URxvt.fading: 0
 
 !! Fonts {{{
 URxvt.font: xft:Source Code Pro:style=Regular:size=9,\
-	xft:MesloLGS NF:style=Medium:size=9
+	xft:MesloLGS NF:style=Medium:size=9,\
+	xft:Symbola:style=Medium:size=9
 URxvt.boldFont: xft:Source Code Pro:style=Bold:size=10,\
-	xft:MesloLGS NF:style=Medium:size=9
+	xft:MesloLGS NF:style=Medium:size=9,\
+	xft:Symbola:style=Medium:size=9
 URxvt.italicFont: xft:Source Code Pro:style=Italic:size=8,\
-	xft:MesloLGS NF:style=Medium:size=9
+	xft:MesloLGS NF:style=Medium:size=9,\
+	xft:Symbola:style=Medium:size=9
 URxvt.boldItalicFont: xft:Source Code Pro:style=Bold Italic:size=9,\
-	xft:MesloLGS NF:style=Medium:size=9
+	xft:MesloLGS NF:style=Medium:size=9,\
+	xft:Symbola:style=Medium:size=9
 URxvt.letterSpace: -1
 URxvt.lineSpace: 0
 URxvt.geometry: 92x24
