@@ -417,7 +417,6 @@ let g:calendar_google_calendar = 1
 let g:calendar_google_task = 1
 
 let js_data = json_decode(join(readfile(desktop_env_dir . 'private/calendar_api.json')))
-echo js_data[0].calendar_google_api_key
 let g:calendar_google_api_key = js_data[0].calendar_google_api_key
 let g:calendar_google_client_id = js_data[0].calendar_google_client_id
 let g:calendar_google_client_secret = js_data[0].calendar_google_client_secret
