@@ -47,6 +47,9 @@ Plug 'junegunn/vim-easy-align'
 " R-lang in vim!
 "Plug 'jalvesaq/Nvim-R', {'branch': 'stable'}
 
+" Minimap in vim!
+Plug 'wfxr/minimap.vim'
+
 " git for vim
 Plug 'tpope/vim-fugitive'
 
@@ -78,6 +81,16 @@ let g:desktop_env_dir="/home/alexe/.config/desktop-environment/"
 " better leader
 let mapleader="\<Space>"
 let maplocalleader=","
+
+" minimap
+let g:minimap_git_colors=1
+let g:minimap_auto_start=1
+nnoremap <silent> <leader>m :MinimapRefresh<CR>
+
+" Output the current syntax group
+nnoremap <f10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
+\ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
+\ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<cr>
 
 " reload vimrc
 nnoremap <silent> <leader>r :so $MYVIMRC<CR>
