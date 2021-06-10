@@ -128,9 +128,8 @@ function gotodo() {
 }
 
 # alias see-git-objs='for ref in $(find .git/objects -type f | sed -n "s .git/objects/\(..\)/\(.*\) \1\2 p"); do echo $ref "{{{"; git cat-file -p $ref;echo "}}}"; done | nvim -c ":set fdm=marker"'
-alias vim="swallow neovide --multiGrid"
+alias vim="nvim" # --multiGrid"
 alias colors="$de/scripts/print_colors"
-alias opdf="swallow okular"
 function emg {
 	[ -f $1 ] || touch $1
 	swallow emacsclient -c --alternate-editor '' $1
@@ -146,7 +145,7 @@ function jvim {
 	fi
 	vim $1 -c "silent JupyterConnect"
 }
-alias magit='git rev-parse --is-inside-work-tree && swallow emacsclient -e "(progn (magit-status) (delete-other-windows))" -c'
+alias magit='git rev-parse --is-inside-work-tree && swallow emacsclient -c --alternate-editor "" -e "(progn (magit-status) (delete-other-windows))" -c'
 function csvplot {
 	if [[ $# -eq 1 ]]; then
 		title="$1"
