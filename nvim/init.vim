@@ -281,12 +281,14 @@ function! SetPythonOptions() " {{{
 
 	" keybind functions {{{
 	function! RunTests()
-		return 'pytest -v --doctest-modules --disable-warnings'
+		return 'pytest -n auto -v --doctest-modules --disable-warnings'
 	endfunction
 	function! RunTestLocal()
-		norm 0,s/^def\W\+\(\w\+\)/\=setreg('q', submatch(1))/n
-		return 'pytest -v --doctest-modules --disable-warnings '
-			\. expand('%') . '::' . @q
+		" s saves cursor location in ' register, e moves to the end
+		call search('\(def\|class\)[ \t]\+\w\+', 'seb')
+		let match = expand('<cword>')
+		norm! `'
+		return 'pytest -n auto -v --doctest-modules --disable-warnings -k ":' . match . ' or .' . match . '"'
 	endfunction
 	function! RunFile()
 		return "python " . expand('%:p')
