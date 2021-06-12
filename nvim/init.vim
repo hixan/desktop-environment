@@ -155,7 +155,15 @@ nmap <leader>gp <Plug>(GitGutterPrevHunk)
 nmap <leader>gg <Plug>(GitGutterPreviewHunk)
 nmap <leader>gd <Plug>(GitGutterUndoHunk)
 nmap <leader>gs <Plug>(GitGutterStageHunk)
-let g:gitgutter_preview_win_floating = 0
+vmap <leader>gs <Plug>(GitGutterStageHunk)
+let g:gitgutter_preview_win_floating = 1
+
+let g:gitgutter_sign_added = '▌+'
+let g:gitgutter_sign_modified = '▌~'
+let g:gitgutter_sign_removed = '▌_'
+let g:gitgutter_sign_removed_first_line = '▌▔'
+let g:gitgutter_sign_removed_above_and_below = '▌{'
+let g:gitgutter_sign_modified_removed = '▌_'
 
 " git diffs highlight color (same as line number settings)
 "hi! link SignColumn LineNr
