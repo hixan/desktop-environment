@@ -168,9 +168,15 @@ let g:gitgutter_sign_modified_removed = '▌_'
 " git diffs highlight color (same as line number settings)
 "hi! link SignColumn LineNr
 
-" change folded color (to be different from comments)
-hi Folded ctermfg=10
-hi Folded ctermbg=2
+" change various color settings
+hi Folded ctermfg=10 ctermbg=4 cterm=italic
+hi SignColumn ctermbg=NONE
+hi VertSplit ctermbg=NONE
+hi Normal ctermbg=NONE
+hi GitGutterAdd ctermbg=NONE
+hi GitGutterChange ctermbg=NONE
+hi GitGutterDelete ctermbg=NONE
+hi Search ctermfg=6
 
 " easy align
 xmap <leader>a <Plug>(EasyAlign)
