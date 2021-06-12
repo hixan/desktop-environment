@@ -291,6 +291,12 @@ function! PythonFoldText() " {{{
 
 endfunction " }}}
 
+function! CocSettings() " {{{
+	nmap <silent> <localleader>d <Plug>(coc-definition)
+	nmap <silent> <localleader>cn <Plug>(coc-diagnostic-next)
+	nmap <silent> <localleader>cp <Plug>(coc-diagnostic-prev)
+endfunction " }}}
+
 function! SetPythonOptions() " {{{
 
 	" keybind functions {{{
@@ -364,6 +370,8 @@ function! SetPythonOptions() " {{{
 	 setlocal foldtext=PythonFoldText()
 	 " reset folding
 	 nnoremap <buffer> <silent> <localleader>x :w<CR>:e<CR>
+
+	 call CocSettings()
 
  endfunction " }}}
 
