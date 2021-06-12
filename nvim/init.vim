@@ -288,7 +288,7 @@ function! SetPythonOptions() " {{{
 		call search('\(def\|class\)[ \t]\+\w\+', 'seb')
 		let match = expand('<cword>')
 		norm! `'
-		return 'pytest -n auto -v --doctest-modules --disable-warnings -k ":' . match . ' or .' . match . '"'
+		return 'pytest -v -s --doctest-modules -k ' . match
 	endfunction
 	function! RunFile()
 		return "python " . expand('%:p')
