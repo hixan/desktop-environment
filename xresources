@@ -83,4 +83,9 @@ URxvt.keysym.Shift-Control-V: eval:paste_clipboard
 !! Others {{{
 urxvt*depth: 32
 urxvt*background: rgba:1900/1900/1900/9999
+
+! dont auto scroll when scrolled up
+URxvt*scrollTtyOutput:      false
+URxvt*scrollWithBuffer:     true
+URxvt*scrollTtyKeypress:    true
 !! }}}
