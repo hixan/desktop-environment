@@ -302,7 +302,7 @@ function! PythonFoldText() " {{{
 
 endfunction " }}}
 
-function! CocSettings() " {{{
+function! SetCocOptions " {{{
 	nmap <silent> <localleader>d <Plug>(coc-definition)
 	nmap <silent> <localleader>cn <Plug>(coc-diagnostic-next)
 	nmap <silent> <localleader>cp <Plug>(coc-diagnostic-prev)
@@ -382,7 +382,7 @@ function! SetPythonOptions() " {{{
 	 " reset folding
 	 nnoremap <buffer> <silent> <localleader>x :w<CR>:e<CR>
 
-	 call CocSettings()
+	 call SetCocOptions()
 
  endfunction " }}}
 
@@ -408,7 +408,7 @@ function! SetCppOptions() " {{{
 endfunction " }}}
 
 autocmd filetype cpp call SetCppOptions()
-autocmd filetype cpp call CocSettings()
+autocmd filetype cpp call SetCocOptions()
 "}}}
 "# Javascript ########################################{{{
 " javascript folding
