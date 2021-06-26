@@ -319,7 +319,7 @@ function! SetPythonOptions() " {{{
 		call search('\(def\|class\)[ \t]\+\w\+', 'seb')
 		let match = expand('<cword>')
 		norm! `'
-		return 'pytest -v -s --doctest-modules -k ' . match
+		return 'pytest -v -s --tb=short --doctest-modules -k ' . match
 	endfunction
 	function! RunFile()
 		return "python " . expand('%:p')
