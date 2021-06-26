@@ -424,14 +424,14 @@ let g:javascript_conceal_null                 = "ø"
 autocmd FileType javascript setlocal conceallevel=1
 
 " }}}
-"####################### JSON ##############################################{{{
+"# JSON ##############################################{{{
 autocmd FileType json setlocal cole=3
 autocmd FileType json set foldmethod=syntax
 "}}}
-"####################### vimscript #########################################{{{
+"# vimscript #########################################{{{
 autocmd filetype vim set foldmethod=marker
 "}}}
-"####################### Latex #############################################{{{
+"# Latex #############################################{{{
 "nmap <localleader>x :echom GetSelection()<CR>
 function! GetSelection()
 	" https://stackoverflow.com/a/1534347
@@ -452,7 +452,7 @@ function! SetLatexOptions()
 endfunction
 autocmd filetype tex,latex call SetLatexOptions()
 "}}}
-"####################### FireNvim ##########################################{{{
+"# FireNvim ##########################################{{{
 let g:firenvim_config = { 
     \ 'globalSettings': {
         \ 'alt': 'all',
@@ -468,7 +468,7 @@ let g:firenvim_config = {
     \ }
 \ }
 "}}}
-"####################### Calendar ##########################################{{{
+"# Calendar ##########################################{{{
 let g:calendar_google_calendar = 1
 let g:calendar_google_task = 1
 
