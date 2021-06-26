@@ -197,7 +197,7 @@ nmap <leader>tn :tabNext<CR>
 nmap <leader>tp :tabprevious<CR>
 
 " }}}
-"####################### Jupyter Notebook ##################################{{{
+"# Jupyter Notebook ##################################{{{
 " jupytext to open as .py format
 let g:jupytext_fmt = 'py'
 let g:jupytext_to_ipynb_opts = '--to=ipynb' " --update'
@@ -231,14 +231,14 @@ endfunction
 
 call SetJupyterOptions()
 " }}}
-"####################### R files ###########################################{{{
+"# R files ###########################################{{{
 " fix R indentation
 let r_indent_align_args = 0
 " R-lang set tab width
 autocmd filetype r setlocal tabstop=2 shiftwidth=2
 
 " }}}
-"####################### Python Files ######################################{{{
+"# Python Files ######################################{{{
 "
 " TODO send buffer to python command instead of saving file and sending file.
 " This will support running .ipynb files in jupyter mode.
@@ -389,7 +389,28 @@ function! SetPythonOptions() " {{{
 autocmd filetype python call SetPythonOptions()
 
 " }}}
-"####################### Javascript ########################################{{{
+"# C++ Files #########################################{{{
+function! SetCppOptions() " {{{
+	function! CompiledFile()
+		return expand('%:r') . '.out'
+	endfunction
+
+	function! CompileFile()
+		return "g++ -o " . CompiledFile() . ' ' . expand('%:p') . ' -std=c++17' 
+	endfunction
+
+	function! RunFile()
+		return './' . CompiledFile()
+	endfunction
+
+	nmap <buffer> <silent> <localleader>c :w<CR>:silent call ToTTY(CompileFile(), 'i3')<CR>
+	nmap <buffer> <silent> <localleader>r :w<CR>:silent call ToTTY(CompileFile(), 'i3')<CR>:silent call ToTTY(RunFile(), 'i3')<CR>
+endfunction " }}}
+
+autocmd filetype cpp call SetCppOptions()
+autocmd filetype cpp call CocSettings()
+"}}}
+"# Javascript ########################################{{{
 " javascript folding
 augroup javascript_folding
     au!
