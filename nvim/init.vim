@@ -302,7 +302,7 @@ function! PythonFoldText() " {{{
 
 endfunction " }}}
 
-function! SetCocOptions " {{{
+function! SetCocOptions() " {{{
 	nmap <silent> <localleader>d <Plug>(coc-definition)
 	nmap <silent> <localleader>cn <Plug>(coc-diagnostic-next)
 	nmap <silent> <localleader>cp <Plug>(coc-diagnostic-prev)
@@ -403,8 +403,10 @@ function! SetCppOptions() " {{{
 		return './' . CompiledFile()
 	endfunction
 
-	nmap <buffer> <silent> <localleader>c :w<CR>:silent call ToTTY(CompileFile(), 'i3')<CR>
-	nmap <buffer> <silent> <localleader>r :w<CR>:silent call ToTTY(CompileFile(), 'i3')<CR>:silent call ToTTY(RunFile(), 'i3')<CR>
+	setlocal foldexpr=nvim_treesitter#foldexpr()
+
+	nnoremap <buffer> <silent> <localleader>c :w<CR>:silent call ToTTY(CompileFile(), 'i3')<CR>
+	nnoremap <buffer> <silent> <localleader>r :w<CR>:silent call ToTTY(CompileFile(), 'i3')<CR>:silent call ToTTY(RunFile(), 'i3')<CR>
 endfunction " }}}
 
 autocmd filetype cpp call SetCppOptions()
