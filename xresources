@@ -2,40 +2,57 @@
 ! for testing colors:
 ! vim xresources; xrdb xresources; urxvt -e sh -c "/home/alexe/.config/desktop-environment/scripts/print_colors; zsh" &
 
+!! Rofi {{{
+rofi.color-window: argb:582d303b, #7c8389, #1d1f21
+rofi.color-normal: argb:2c816253, #c4cbd4, argb:96404552, #4084d6, #f9f9f9
+rofi.color-urgent: argb:2c1d1f21, #cc6666, argb:e54b5160, #a54242, #f9f9f9
+rofi.color-active: argb:2c1d1f21, #65acff, argb:e44b5160, #4491ed, #f9f9f9
+rofi.width: 60
+rofi.location: 0
+rofi.lines: 12
+rofi.columns: 3
+rofi.font: Noto Sans 14
+rofi.bw: 0
+rofi.padding: 18
+rofi.eh: 1
+!rofi.separator-style: solid
+rofi.hide-scrollbar: true
+! }}}
+
 !! Colors {{{
 
 ! special
 *.foreground:   #c4c4c4
 *.background:   #191919
-*.cursorColor:  #661133
+*.cursorColor:  #c4c4c4
 
 ! black
-*.color0:       #555555
-*.color8:       #a6a6a6
+*.color0:       #888888
+*.color8:       #767676
 
 ! red
-*.color1:       #9c3528
-*.color9:       #e74f3b
+*.color1:       #680b00
+*.color9:       #e71b00
 
 ! green
-*.color2:       #274b18
-*.color10:      #6cb44b
+*.color2:       #164b00
+*.color10:      #39b400
 
 ! yellow
-*.color3:       #915323
-*.color11:      #e09155
+*.color3:       #913f00
+*.color11:      #ff6e00
 
 ! blue
-*.color4:       #094b79
-*.color12:      #0f75bd
+*.color4:       #004779
+*.color12:      #007dd6
 
 ! magenta
-*.color5:       #744560
-*.color13:      #ca78a8
+*.color5:       #740043
+*.color13:      #f70091
 
 ! cyan
-*.color6:       #227985
-*.color14:      #38c8dc
+*.color6:       #008395
+*.color14:      #00c1dc
 
 ! white
 *.color7:       #757575
@@ -46,18 +63,18 @@ URxvt.fading: 0
 ! }}}
 
 !! Fonts {{{
-URxvt.font: xft:Source Code Pro:style=Regular:size=9,\
-	xft:MesloLGS NF:style=Medium:size=9,\
-	xft:DejaVu Sans Oblique:style=Medium:size=9
+URxvt.font: xft:Source Code Pro:style=Regular:size=10,\
+	xft:MesloLGS NF:style=Medium:size=10,\
+	xft:DejaVu Sans Oblique:style=Medium:size=10
 URxvt.boldFont: xft:Source Code Pro:style=Bold:size=10,\
-	xft:MesloLGS NF:style=Medium:size=9,\
-	xft:DejaVu Sans Oblique:style=Medium:size=9
-URxvt.italicFont: xft:Source Code Pro:style=Italic:size=8,\
-	xft:MesloLGS NF:style=Medium:size=9,\
-	xft:DejaVu Sans Oblique:style=Medium:size=9
-URxvt.boldItalicFont: xft:Source Code Pro:style=Bold Italic:size=9,\
-	xft:MesloLGS NF:style=Medium:size=9,\
-	xft:Seoge UI Symbol:style=Medium:size=8
+	xft:MesloLGS NF:style=Medium:size=10,\
+	xft:DejaVu Sans Oblique:style=Medium:size=10
+URxvt.italicFont: xft:Source Code Pro:style=Italic:size=10,\
+	xft:MesloLGS NF:style=Medium:size=10,\
+	xft:DejaVu Sans Oblique:style=Medium:size=10
+URxvt.boldItalicFont: xft:Source Code Pro:style=Bold Italic:size=10,\
+	xft:MesloLGS NF:style=Medium:size=10,\
+	xft:Seoge UI Symbol:style=Medium:size=10
 URxvt.letterSpace: -1
 URxvt.lineSpace: 0
 URxvt.geometry: 92x24
@@ -82,7 +99,7 @@ URxvt.keysym.Shift-Control-V: eval:paste_clipboard
 
 !! Others {{{
 urxvt*depth: 32
-urxvt*background: rgba:1900/1900/1900/9999
+urxvt*background: rgba:4900/4900/4900/bbbb
 
 ! dont auto scroll when scrolled up
 URxvt*scrollTtyOutput:      false
