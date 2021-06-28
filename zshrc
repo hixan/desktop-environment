@@ -154,5 +154,6 @@ function csvplot {
 	fi
 	python -c "import pandas as pd, sys, matplotlib.pyplot as plt; pd.read_csv(\"$1\").plot(); plt.title(\"$title\"); plt.show()"
 }
+alias calendar='vim -c ":Calendar"'
 # sudoeditor to use neovim
 export SUDO_EDITOR=/usr/bin/nvim
