@@ -26,8 +26,7 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'airblade/vim-gitgutter'
 
 " python folding
-"Plug 'tmhedberg/SimpylFold'
-Plug 'nvim-treesitter/nvim-treesitter'
+Plug 'hixan/nvim-treesitter'
 Plug 'nvim-treesitter/playground'
 
 " python pep-8 indentation
@@ -92,9 +91,9 @@ let mapleader="\<Space>"
 let maplocalleader=","
 
 " minimap
-let g:minimap_git_colors=1
 let g:minimap_auto_start=1
-nnoremap <silent> <leader>m :MinimapRefresh<CR>
+let g:minimap_highlight_search=1
+"nnoremap <silent> <leader>m :MinimapRefresh<CR>
 
 " Output the current syntax group
 nnoremap <f10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
@@ -404,6 +403,7 @@ function! SetCppOptions() " {{{
 	endfunction
 
 	setlocal foldexpr=nvim_treesitter#foldexpr()
+	setlocal foldmethod=expr
 
 	nnoremap <buffer> <silent> <localleader>c :w<CR>:silent call ToTTY(CompileFile(), 'i3')<CR>
 	nnoremap <buffer> <silent> <localleader>r :w<CR>:silent call ToTTY(CompileFile(), 'i3')<CR>:silent call ToTTY(RunFile(), 'i3')<CR>

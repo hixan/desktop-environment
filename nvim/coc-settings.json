@@ -1,3 +1,5 @@
 {
-	"python.jediEnabled" : false
+	"python.jediEnabled" : false,
+	"diagnostic.enableSign": false,
+	"signature.hideOnTextChange": false,
 }

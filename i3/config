@@ -33,7 +33,7 @@ bindsym Print exec flameshot gui
 floating_modifier $super
 
 # run any program
-bindsym $super+space exec rofi -lines 12 -padding 18 -width 60 -location 0 -show drun -sidebar-mode -columns 3 -font 'Noto Sans 20'
+bindsym $super+space exec rofi -show combi
 
 #--------------#
 # Applications #
