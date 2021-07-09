@@ -13,15 +13,18 @@ set $desktop-environment-folder ~/.config/desktop-environment/
 # Keybindings (Function) # {{{
 
 # change volume
-bindsym XF86AudioRaiseVolume exec pulseaudio-ctl up
-bindsym XF86AudioLowerVolume exec pulseaudio-ctl down
-bindsym XF86AudioMute exec pulseaudio-ctl mute
+bindsym XF86AudioRaiseVolume exec amixer -D pulse sset Master 5%+ && pkill -RTMIN+1 i3blocks
+bindsym XF86AudioLowerVolume exec amixer -D pulse sset Master 5%- && pkill -RTMIN+1 i3blocks
+bindsym XF86AudioMute exec pamixer -t && notify-send "mute: $(pamixer --get-mute)"
+bindsym $super+XF86AudioRaiseVolume exec amixer -D pulse sset Master 1%+ && pkill -RTMIN+1 i3blocks
+bindsym $super+XF86AudioLowerVolume exec amixer -D pulse sset Master 1%- && pkill -RTMIN+1 i3blocks
 
 # music control
 bindsym XF86AudioNext exec playerctl next
 bindsym XF86AudioPrev exec playerctl prev
-bindsym XF86AudioPlay exec playerctl toggle
+bindsym XF86AudioPlay exec playerctl play
 bindsym XF86AudioStop exec playerctl stop
+bindsym XF86AudioPause exec playerctl pause
 
 # screenshot
 bindsym Print exec flameshot gui
