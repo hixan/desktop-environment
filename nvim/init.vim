@@ -70,6 +70,9 @@ Plug 'glacambre/firenvim', {'do': {_ -> firenvim#install(0)}}
 " google calendar
 Plug 'itchyny/calendar.vim'
 
+" debugger
+Plug 'puremourning/vimspector'
+
 call plug#end() " }}}
 
 "# ALL ###############################################{{{
