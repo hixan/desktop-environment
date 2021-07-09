@@ -85,6 +85,9 @@ exec_always --no-startup-id exec $desktop-environment-folder/scripts/keyboard_la
 # enable touchpad gestures
 exec libinput-gestures
 
+# start blueberry app for managing bluetooth devices from tray:
+exec --no-startup-id blueberry-tray
+
 # volume tray icon
 exec --no-startup-id pasystray
 
