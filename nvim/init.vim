@@ -159,6 +159,9 @@ nmap ga <Plug>(EasyAlign)
 
 nmap <leader>o :only<CR>
 
+" set mappings for vimspector
+let g:vimspector_enable_mappings = 'HUMAN'
+
 " git diffs in modeline
 set updatetime=100
 
@@ -410,6 +413,9 @@ function! SetCppOptions() " {{{
 
 	nnoremap <buffer> <silent> <localleader>c :w<CR>:silent call ToTTY(CompileFile(), 'i3')<CR>
 	nnoremap <buffer> <silent> <localleader>r :w<CR>:silent call ToTTY(CompileFile(), 'i3')<CR>:silent call ToTTY(RunFile(), 'i3')<CR>
+
+	" auto-close braces in cpp files
+	inoremap {<CR> {<CR>}<C-o>O
 endfunction " }}}
 
 autocmd filetype cpp call SetCppOptions()
