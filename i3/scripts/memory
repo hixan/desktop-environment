@@ -1,0 +1,4 @@
+#!/bin/bash
+
+AVAILABLE=$(cat /proc/meminfo | grep MemAvailable | rev | cut -d' ' -f2 | rev)
+printf '%.2fG\n' $(echo "$AVAILABLE / 1024 / 1024" | bc -l)
