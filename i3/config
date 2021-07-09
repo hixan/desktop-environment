@@ -49,7 +49,7 @@ bindsym $super+shift+space exec rofi -show window -display-window "Window : " -l
 #--------------#
 
 # start a terminal
-bindsym $super+Return exec --no-startup-id "$desktop-environment-folder/scripts/terminal"
+bindsym $super+Return exec --no-startup-id "$desktop-environment-folder/scripts/terminal"; workspace $ws1
 # start a terminal with the same cwd as the current focused program.
 bindsym $super+Control+Return exec --no-startup-id "$desktop-environment-folder/scripts/terminal_cwd"
 
