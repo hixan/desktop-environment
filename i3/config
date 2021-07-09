@@ -104,7 +104,7 @@ exec --no-startup-id conky  # system info
 exec --no-startup-id clipman
 
 # notification daemon
-exec --no-startup-id dunst
+exec --no-startup-id dbus-launch dunst --config $desktop-environment-folder/dunst/dunstrc
 
 # printer management
 #exec --no-startup-id system-config-printer-applet  # manage printers
