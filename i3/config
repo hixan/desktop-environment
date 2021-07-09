@@ -36,7 +36,13 @@ bindsym Print exec flameshot gui
 floating_modifier $super
 
 # run any program
-bindsym $super+space exec rofi -show combi
+bindsym $super+space exec rofi -modi drun -show drun -display-drun "Apps : " -line-padding 4 \
+                -columns 2 -padding 50 -hide-scrollbar \
+                -show-icons -drun-icon-theme "Arc-X-D" -font "Noto Sans Regular 11"
+
+bindsym $super+shift+space exec rofi -show window -display-window "Window : " -line-padding 4 \
+                -lines 10 -padding 50 -hide-scrollbar \
+                -show-icons -drun-icon-theme "Arc-X-D" -font "Noto Sans Regular 11"
 
 #--------------#
 # Applications #
