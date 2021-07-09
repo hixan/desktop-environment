@@ -80,7 +80,7 @@ bindsym $super+c exec --no-startup-id "notify-send -t 3000 'starting emacs clipb
 exec_always --no-startup-id exec autorandr -c
 
 # set keyboard layout with mappings
-exec --no-startup-id exec key-mapper-control --command autoload
+exec_always --no-startup-id exec $desktop-environment-folder/scripts/keyboard_layout
 
 # enable touchpad gestures
 exec libinput-gestures
