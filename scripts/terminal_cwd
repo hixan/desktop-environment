@@ -4,10 +4,11 @@ from python_tools import get_active_wd
 from subprocess import Popen
 import sys
 
-term = 'urxvt'
+term = 'kitty'
 term_commands = {
     'urxvt': '-cd',
-    'xfce4-terminal': '--working-directory'
+    'xfce4-terminal': '--working-directory',
+    'kitty': '-d',
 }
 
 Popen([term, term_commands[term], str(get_active_wd())])
