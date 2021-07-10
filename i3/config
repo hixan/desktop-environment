@@ -94,6 +94,9 @@ exec --no-startup-id blueberry-tray
 # volume tray icon
 exec --no-startup-id pasystray
 
+# set powersavings for display (turn screen off after 10 minutes)
+exec --no-startup-id xset s 480 dpms 600 600 600
+
 # start picom (composition manager)
 exec --no-startup-id picom -CGb --config $desktop-environment-folder/picom/picom.conf
 
