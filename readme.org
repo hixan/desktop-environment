@@ -1,15 +1,11 @@
-* Features
-The main interesting things that I have done here are my hacks with terminals and window tracking.
 
-Features:
+The main novel feature here is window focus indication within i3wm.
+
+* Features
 - only the active window has a border
-- symlinking scripts/run_file allows the user to use run_file -f <filename> for python files and they will automatically pipe output (with colored error messages) asynchronously to a seperate terminal of your choosing.
-- reloads necessary configuration on wake from sleep or suspend (support for docking while hibernating/asleep)
-- launch a terminal to the same working directory as the currently active program
-- many other little things that were much easier and less significant.
-* Extras
-** Useful tools
-   - arandr - graphical monitor management
-   - autorandr - automatic profile assignment
-   - system-config-printer - manjaro GUI for cups (printers). RUN AS ROOT
-   - okular - my current favourite PDF viewer
+- launch a terminal to the same working directory as the currently active program (see scripts/terminal_cwd)
+- my other dotfiles
+* Useful tools (I have listed them here as I sometimes forget the names)
+- arandr - graphical monitor management
+- autorandr - automatic profile assignment
+- system-config-printer - manjaro GUI for cups (printers). RUN AS ROOT
