@@ -5,7 +5,8 @@ The main novel feature here is window focus indication within i3wm.
 - only the active window has a border
 - launch a terminal to the same working directory as the currently active program (see scripts/terminal_cwd)
 - my other dotfiles
-* Useful tools (I have listed them here as I sometimes forget the names)
+* Useful tools
+(I have listed them here as I sometimes forget the names)
 - arandr - graphical monitor management
 - autorandr - automatic profile assignment
 - system-config-printer - manjaro GUI for cups (printers). RUN AS ROOT
