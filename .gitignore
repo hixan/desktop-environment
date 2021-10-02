@@ -4,3 +4,7 @@ meta/**
 **/__pycache__/**
 nvim/pack/**
 private/**
+qutebrowser/quickmarks
+qutebrowser/bookmarks
+qutebrowser/qsettings
+qutebrowser/autoconfig.yml
