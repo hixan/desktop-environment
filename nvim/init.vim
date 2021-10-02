@@ -65,7 +65,6 @@ require'nvim-treesitter.configs'.setup {
   incremental_selection = incremental_selection_setup,
   indent = indent_setup,
 }
-
 EOF
 
 set foldmethod=expr foldexpr=nvim_treesitter#foldexpr()
