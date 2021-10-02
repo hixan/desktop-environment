@@ -6,6 +6,7 @@ call plug#begin('~/.config/nvim/plugged') " {{{
 " Plug 'nvim-treesitter/playground'
 
 Plug 'neovim/nvim-lspconfig'
+Plug 'ray-x/lsp_signature.nvim'
 
 " surround text objects with quotes, brackets, etc
 " Plug 'tpope/vim-surround'
@@ -15,6 +16,7 @@ Plug 'neovim/nvim-lspconfig'
 call plug#end() " }}}
 
 lua << EOF
+require "lsp_signature".setup()
 require'lspconfig'.ccls.setup{
 on_attach = function(client, bufnr)
   local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
