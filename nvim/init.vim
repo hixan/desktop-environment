@@ -26,8 +26,9 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'airblade/vim-gitgutter'
 
 " python folding
-Plug 'hixan/nvim-treesitter'
+Plug 'nvim-treesitter/nvim-treesitter', {'branch' : '0.5-compat'}
 Plug 'nvim-treesitter/playground'
+Plug 'nvim-treesitter/nvim-treesitter-textobjects', {'branch' : '0.5-compat'}
 
 " python pep-8 indentation
 Plug 'Vimjas/vim-python-pep8-indent'
@@ -47,7 +48,7 @@ Plug 'junegunn/vim-easy-align'
 "Plug 'jalvesaq/Nvim-R', {'branch': 'stable'}
 
 " Minimap in vim!
-Plug 'wfxr/minimap.vim'
+" Plug 'wfxr/minimap.vim'
 
 " git for vim
 Plug 'tpope/vim-fugitive'
@@ -94,9 +95,8 @@ let mapleader="\<Space>"
 let maplocalleader=","
 
 " minimap
-let g:minimap_auto_start=1
-let g:minimap_highlight_search=1
-"nnoremap <silent> <leader>m :MinimapRefresh<CR>
+" let g:minimap_auto_start=1 let g:minimap_highlight_search=1
+" nnoremap <silent> <leader>m :MinimapRefresh<CR>
 
 " Output the current syntax group
 nnoremap <f10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
@@ -317,14 +317,14 @@ function! SetPythonOptions() " {{{
 
 	" keybind functions {{{
 	function! RunTests()
-		return 'pytest -n auto -v --doctest-modules --disable-warnings'
+		return 'PYTHONPATH=. pytest -n auto -v --doctest-modules --disable-warnings'
 	endfunction
 	function! RunTestLocal()
 		" s saves cursor location in ' register, e moves to the end
 		call search('\(def\|class\)[ \t]\+\w\+', 'seb')
 		let match = expand('<cword>')
 		norm! `'
-		return 'pytest -v -s --tb=short --doctest-modules -k ' . match
+		return 'PYTHONPATH=. pytest -v -s --tb=short --doctest-modules -k ' . match
 	endfunction
 	function! RunFile()
 		return "python " . expand('%:p')
@@ -397,11 +397,11 @@ autocmd filetype python call SetPythonOptions()
 "# C++ Files #########################################{{{
 function! SetCppOptions() " {{{
 	function! CompiledFile()
-		return expand('%:r') . '.out'
+		return expand('%:r')
 	endfunction
 
 	function! CompileFile()
-		return "g++ -o " . CompiledFile() . ' ' . expand('%:p') . ' -std=c++17' 
+		return "g++ -ggdb -o " . CompiledFile() . ' ' . expand('%:p') . ' -std=c++17' 
 	endfunction
 
 	function! RunFile()
@@ -418,6 +418,37 @@ function! SetCppOptions() " {{{
 	inoremap {<CR> {<CR>}<C-o>O
 endfunction " }}}
 
+lua <<EOF
+require'nvim-treesitter.configs'.setup {
+  textobjects = {
+    select = {
+      enable = true,
+      lookahead = true,
+      lookback = true,
+      keymaps = {
+        -- You can use the capture groups defined in textobjects.scm
+        ["af"] = "@function.outer",
+        ["if"] = "@function.inner",
+        ["ac"] = "@class.outer",
+        ["ic"] = "@class.inner",
+        ["ap"] = "@parameter.outer",
+        ["ip"] = "@parameter.inner",
+
+        -- Or you can define your own textobjects like this
+        --["iF"] = {
+        --  python = "(function_definition) @function",
+        --  cpp = "(function_definition) @function",
+        --  c = "(function_definition) @function",
+        --  java = "(method_declaration) @function",
+        --},
+	--["ia"] = {
+	--  cpp = "(parameter_declaration) @function",
+	--},
+      },
+    },
+  },
+}
+EOF
 autocmd filetype cpp call SetCppOptions()
 autocmd filetype cpp call SetCocOptions()
 "}}}
