@@ -5,4 +5,4 @@ schema=${port_token[0]}
 port=${port_token[1]}
 token=${port_token[2]}
 
-firefox "$schema://localhost:$port/lab/workspaces/console?token=$token"
+qutebrowser "$schema://localhost:$port/lab/workspaces/console?token=$token"

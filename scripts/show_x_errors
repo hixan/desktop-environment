@@ -1,3 +1,4 @@
 #!/bin/sh
 
-notify-send "$(tail -n 20 /home/alexe/.xsession-errors)"
+notify-send "$(tail -n 10 ~/.xsession-errors)" -t 30000
+echo "Showed Errors in i3" >> ~/.xsession-errors

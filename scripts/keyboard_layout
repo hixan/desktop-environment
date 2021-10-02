@@ -2,3 +2,5 @@
 for f in $(ls ~/.config/desktop-environment/key_mappings); do
 	xmodmap ~/.config/desktop-environment/key_mappings/$f
 done
+
+xset r rate 200 30
