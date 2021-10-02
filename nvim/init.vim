@@ -3,8 +3,8 @@ set mouse=a
 
 call plug#begin('~/.config/nvim/plugged') " {{{
 " python folding
-Plug 'nvim-treesitter/nvim-treesitter'
-Plug 'nvim-treesitter/playground'
+" Plug 'nvim-treesitter/nvim-treesitter'
+" Plug 'nvim-treesitter/playground'
 
 " surround text objects with quotes, brackets, etc
 " Plug 'tpope/vim-surround'
