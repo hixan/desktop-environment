@@ -7,6 +7,11 @@ call plug#begin('~/.config/nvim/plugged') " {{{
 
 Plug 'neovim/nvim-lspconfig'
 
+" nvim-cmp
+Plug 'hrsh7th/cmp-nvim-lsp'
+Plug 'hrsh7th/cmp-buffer'
+Plug 'hrsh7th/nvim-cmp'
+
 " surround text objects with quotes, brackets, etc
 " Plug 'tpope/vim-surround'
 " Plug 'tpope/vim-fugative'
@@ -15,8 +20,16 @@ Plug 'neovim/nvim-lspconfig'
 call plug#end() " }}}
 
 lua << EOF
+cmp = require'cmp'
+cmp.setup{
+  sources = {
+    { name = 'nvim_lsp' },
+    -- { name = 'buffer' },
+  },
+}
+
 require'lspconfig'.ccls.setup{
-on_attach = function(client, bufnr)
+on_attach = function(client, bufnr) -- {{{
   local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
   local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
 
@@ -44,7 +57,10 @@ on_attach = function(client, bufnr)
   buf_set_keymap('n', ']d', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
   buf_set_keymap('n', '<space>q', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', opts)
   buf_set_keymap('n', '<space>f', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
-end
+end, -- }}}
+
+-- nvim-cmp
+capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities()),
 }
 EOF
 
