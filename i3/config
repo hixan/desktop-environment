@@ -56,13 +56,9 @@ bindsym $super+Control+Return exec --no-startup-id "$desktop-environment-folder/
 # set output tty with to-tty (https://github.com/hixan/to_tty)
 bindsym $super+o exec --no-startup-id "to-tty i3 -s"
 
-## Open clipboard item
-
+# Open clipboard item
 # open copied link in VLC
 bindsym $super+v exec vlc "$(xsel -bo)"
-
-# start whatsapp (or go to chat workspace)
-bindsym $super+w exec pidof WhatsAppQT || WhatsAppQT; workspace $ws5
 
 # start a browser
 bindsym $super+Shift+Return exec qutebrowser --target tab github.com; workspace $ws2
@@ -156,9 +152,11 @@ bindsym $super+s split toggle
 
 # enter fullscreen mode for the focused container
 bindsym $super+f fullscreen toggle
+bindsym $super+ctrl+f fullscreen toggle global
 
 # move focused workspace to different monitor
-bindsym $super+Ctrl+l move workspace to output right
+bindsym $super+Control+l move workspace to output right
+bindsym $super+Control+k move workspace to output up
 
 # move to scratchpad
 bindsym $super+minus move scratchpad
@@ -206,6 +204,10 @@ bindsym $super+Shift+7 move container to workspace $ws7; workspace $ws7
 bindsym $super+Shift+8 move container to workspace $ws8; workspace $ws8
 bindsym $super+Shift+9 move container to workspace $ws9; workspace $ws9
 
+# cycle workspace
+bindsym $super+Tab workspace next_on_output
+bindsym $super+Shift+Tab move container to workspace next_on_output; workspace next_on_output
+
 # }}}
 # Variables and Colors   # {{{
 
@@ -238,7 +240,7 @@ assign [class="(?i)firefox"] $ws2
 assign [class="(?i)qutebrowser"] $ws2
 assign [class="Thunar"] $ws3
 assign [class="Thunderbird"] $ws4
-assign [class="WhatsAppQT"] $ws5
+assign [class="Vmware-view"] $ws8
 #assign [class="TelegramDesktop"] $ws5
 
 # set floating (nontiling)for apps needing it
@@ -299,7 +301,7 @@ bar {
 	font pango:Noto Sans Regular 10, FontAwesome 10
 	status_command i3blocks -c ~/.config/i3/i3blocks.conf
 	position bottom
-	i3bar_command i3bar --transparency
+	i3bar_command i3bar
 	# it could be that you have no primary display set: set one (xrandr --output <output> --primary)
 	# reference: https://i3wm.org/docs/userguide.html#_tray_output
 	tray_output primary
