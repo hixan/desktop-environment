@@ -14,6 +14,9 @@ Plug 'tpope/vim-commentary'
 " easy alignment of comments, code, etc
 Plug 'junegunn/vim-easy-align'
 
+" signature help with lsp
+Plug 'ray-x/lsp_signature.nvim'
+
 " lsp default configurations
 Plug 'neovim/nvim-lspconfig'
 
@@ -29,13 +32,14 @@ require'gitsigns'.setup()
 EOF
 
 lua << EOF
-cmp = require'cmp'
-cmp.setup{
+require'cmp'.setup{
   sources = {
     { name = 'nvim_lsp' },
     -- { name = 'buffer' },
   },
 }
+
+require "lsp_signature".setup()
 
 require'lspconfig'.ccls.setup{
 on_attach = function(client, bufnr) -- {{{
