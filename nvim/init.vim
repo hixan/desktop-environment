@@ -2,7 +2,7 @@ set clipboard=unnamedplus
 set mouse=a
 
 call plug#begin('~/.config/nvim/plugged') " {{{
-" python folding
+
 Plug 'nvim-treesitter/nvim-treesitter'
 Plug 'nvim-treesitter/playground'
 
