@@ -6,11 +6,6 @@ call plug#begin('~/.config/nvim/plugged') " {{{
 Plug 'nvim-treesitter/nvim-treesitter'
 Plug 'nvim-treesitter/playground'
 
-" surround text objects with quotes, brackets, etc
-" Plug 'tpope/vim-surround'
-" Plug 'tpope/vim-fugative'
-" easy alignment of comments, code, etc
-" Plug 'junegunn/vim-easy-align'
 call plug#end() " }}}
 
 " treesitter-highlight {{{
